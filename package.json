@@ -14,5 +14,6 @@
     "axios": "^1.6.0",
     "cheerio": "^1.0.0-rc.12",
     "express-ejs-layouts": "^2.5.1"
+    "node-cache": "^5.1.2"
   }
 }
