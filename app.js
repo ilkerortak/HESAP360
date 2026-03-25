@@ -12,68 +12,51 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 async function getSakaryaEczaneler() {
     try {
-        // Alternatif ve daha stabil olan link (Rehber sayfası)
-        const url = 'https://www.sakarya.bel.tr/tr/EBelediye/NobetciEczaneler';
+        // YENİ KAYNAK: Sakarya Eczacı Odası Nöbetçi Listesi
+        const url = 'https://www.seo.org.tr/nobetci-eczaneler';
         
         const { data } = await axios.get(url, {
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-                'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7'
+                'Referer': 'https://www.seo.org.tr/'
             },
-            timeout: 10000
+            timeout: 15000
         });
 
         const $ = cheerio.load(data);
         const list = [];
 
-        // Sakarya Belediye sitesinde veriler bazen <tbody> içinde bazen direkt <tr> içindedir
-        $('tr').each((i, el) => {
-            const cells = $(el).find('td');
-            if (cells.length >= 3) {
-                const ad = $(cells[0]).text().trim();
-                const adres = $(cells[1]).text().trim();
-                const tel = $(cells[2]).text().trim().replace(/\D/g, ''); // Sadece rakamlar
-                const ilce = $(cells[3]).text().trim();
+        // SEO sitesindeki eczane kartlarını hedefliyoruz
+        // Not: Sitenin HTML yapısına göre .panel veya .card yapılarını tarar
+        $('.nobetci-eczane, .panel-default, tr').each((i, el) => {
+            const ad = $(el).find('h4, strong, .eczane-adi').first().text().trim();
+            const adres = $(el).find('.adres, p').text().trim();
+            let tel = $(el).find('.telefon, a[href^="tel"]').text().trim().replace(/\D/g, '');
 
-                // Başlık satırı ve boşluk kontrolü
-                if (ad && ad.length > 2 && !ad.toLowerCase().includes("eczane adı")) {
-                    list.push({
-                        ad: ad.toUpperCase(),
-                        adres: adres,
-                        tel: tel.startsWith('0') ? tel : '0' + tel,
-                        ilce: ilce || 'Sakarya'
-                    });
-                }
+            if (ad && ad.length > 3 && !ad.toLowerCase().includes("eczane adı")) {
+                list.push({
+                    ad: ad.toUpperCase(),
+                    adres: adres.replace(/\t|\n/g, ' '), // Fazla boşlukları temizle
+                    tel: tel.startsWith('0') ? tel : '0' + tel,
+                    ilce: 'Sakarya'
+                });
             }
         });
 
-        // Eğer hala boşsa, belediyenin farklı bir CSS yapısını (div-tabanlı) kontrol et
+        // Eğer hala boşsa, alternatif bir API veya JSON kaynağı denebilir (Şimdilik yedek mesajı)
         if (list.length === 0) {
-            $('.nobetci-item, .pharmacy-item').each((i, el) => {
-                const ad = $(el).find('.title, h4').text().trim();
-                const adres = $(el).find('.address, p').first().text().trim();
-                const tel = $(el).find('.phone, .tel').text().trim().replace(/\D/g, '');
-                if (ad) list.push({ ad: ad.toUpperCase(), adres, tel: '0' + tel.replace(/^0/, ''), ilce: 'Sakarya' });
-            });
+            return [{ ad: "GÜNCELLEME YAPILIYOR", adres: "Eczacı Odası verileri çekiliyor, lütfen az sonra tekrar deneyin.", tel: "0", ilce: "Sistem" }];
         }
 
-        // GERÇEK VERİ GELİRSE YEDEKLERİ SİL
-        if (list.length > 0) return list;
-
-        // VERİ GELMEZSE (SADECE O ZAMAN YEDEK)
-        return [
-            { ad: "VERİ BAĞLANTISI BEKLENİYOR", adres: "Lütfen 1 dakika sonra sayfayı yenileyin.", tel: "02640000000", ilce: "Sistem" }
-        ];
-
+        return list;
     } catch (error) {
-        console.error("Scraper Hatası:", error.message);
-        return [{ ad: "SİSTEM MEŞGUL", adres: "Belediye sunucusu şu an cevap vermiyor.", tel: "0", ilce: "Hata" }];
+        console.error("Hata:", error.message);
+        return [{ ad: "BAĞLANTI HATASI", adres: "Veri kaynağına şu an ulaşılamıyor.", tel: "0", ilce: "Hata" }];
     }
 }
 
 app.get('/', (req, res) => {
-    res.render('index', { title: 'Ana Sayfa' });
+    res.render('index', { title: 'Eczane360 | Ana Sayfa' });
 });
 
 app.get('/eczaneler/sakarya', async (req, res) => {
@@ -86,4 +69,4 @@ app.get('/ads.txt', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Sakarya Canlı Veri Motoru Yayında!`));
+app.listen(PORT, () => console.log(`Eczacı Odası Motoru Aktif!`));
