@@ -2,12 +2,11 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
-// Görünüm motoru ayarları
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Sabit Veriler (Hata almamak için dolu gönderiyoruz)
+// PROFESYONEL VERİ SETİ (BANKA FAİZLERİ VE LOGOLARI)
 const financeData = {
     market: { usd: "32.45", eur: "35.12", gold: "2.450" },
     banks: [
@@ -18,22 +17,24 @@ const financeData = {
     ]
 };
 
-// Sayfa Rotaları
-app.get('/', (req, res) => {
-    res.render('index', { data: financeData });
-});
-
-app.get('/kredi', (req, res) => {
-    res.render('kredi', { banks: financeData.banks });
-});
-
-app.get('/mevduat', (req, res) => {
-    res.render('mevduat', { banks: financeData.banks });
-});
-
+// SAYFA ROTALARI
+app.get('/', (req, res) => { res.render('index', { data: financeData }); });
+app.get('/kredi', (req, res) => { res.render('kredi', { banks: financeData.banks }); });
+app.get('/mevduat', (req, res) => { res.render('mevduat', { banks: financeData.banks }); });
 app.get('/kredi-karti', (req, res) => { res.render('kredi-karti'); });
 app.get('/kredi-limit', (req, res) => { res.render('kredi-limit'); });
 
-// Port Dinleme
+// BİLGİ MERKEZİ (HAKKIMIZDA, KVKK, İLETİŞİM)
+app.get('/bilgi/:sayfa', (req, res) => {
+    const sayfa = req.params.sayfa;
+    const basliklar = {
+        'hakkimizda': 'Hakkımızda',
+        'kvkk': 'KVKK Aydınlatma Metni',
+        'kosullar': 'Kullanım Koşulları',
+        'iletisim': 'İletişim'
+    };
+    res.render('bilgi', { sayfa: sayfa, baslik: basliklar[sayfa] || 'Bilgi Merkezi' });
+});
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Sunucu ${PORT} portunda aktif.`));
+app.listen(PORT, () => console.log('Hesap360 Yayında!'));
