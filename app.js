@@ -1,13 +1,13 @@
 const express = require('express');
-const cron = require('node-cron');
 const axios = require('axios');
 const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const fs = require('fs');
+const cron = require('node-cron');
 
 const app = express();
 
-// --- AYARLAR ---
+// Ayarlar
 const NOSY_TOKEN = 'CSsas9Y81PH7hgA3I1n6n3AHgKSQW32fmndxsNWSqzaHARVAorMP5rJyJ5oK'; 
 const BASE_URL = 'https://www.nosyapi.com/apiv2/service/pharmacies-on-duty';
 
@@ -40,41 +40,20 @@ async function getEczaneler(sehir, ilce = "") {
         const response = await axios.get(url, {
             headers: { 'Authorization': `Bearer ${NOSY_TOKEN}` }
         });
-
         const result = response.data.data || [];
         if (result.length > 0) {
             fs.writeFileSync(dosyaYolu, JSON.stringify(result));
             return result;
         }
         return [];
-    } catch (error) {
-        return [];
-    }
+    } catch (error) { return []; }
 }
 
-// --- OTOMATİK TEMİZLİK (SABAH 09:00) ---
-cron.schedule('0 9 * * *', () => {
-    if (fs.existsSync(dataFolder)) {
-        try {
-            const files = fs.readdirSync(dataFolder);
-            for (const file of files) {
-                fs.unlinkSync(path.join(dataFolder, file));
-            }
-            console.log("Sabah temizliği yapıldı.");
-        } catch (err) {
-            console.error("Temizlik hatası:", err);
-        }
-    }
-}, { timezone: "Europe/Istanbul" });
-
-// --- ROTALAR ---
-
-// ANA SAYFA (Hatanın kaynağı burası olabilir, en üste aldım)
+// Rotalar
 app.get('/', (req, res) => {
-    res.render('index', { title: 'Eczane360 | Nöbetçi Eczaneler' });
+    res.render('index', { title: 'Eczane360' });
 });
 
-// ECZANE LİSTESİ
 app.get('/eczaneler/:il/:ilce?', async (req, res) => {
     const il = req.params.il;
     const ilceReq = req.params.ilce || "";
@@ -82,29 +61,33 @@ app.get('/eczaneler/:il/:ilce?', async (req, res) => {
         const hamVeriler = await getEczaneler(il, ilceReq);
         const formatli = hamVeriler.map(e => ({
             ad: (e.pharmacyName || e.name || "Bilinmiyor").toUpperCase(),
-            adres: e.address || "Adres bilgisi yok",
+            adres: e.address || "Adres bulunamadı",
             tel: (e.phone || "").toString().replace(/\D/g, ''),
             ilce: (e.district || il).toUpperCase()
         }));
-        res.render('liste', { il: il.toUpperCase(), eczaneler: formatli, title: `${il.toUpperCase()} Nöbetçi Eczaneler` });
+        res.render('liste', { il: il.toUpperCase(), eczaneler: formatli, title: il.toUpperCase() });
     } catch (err) {
         res.render('liste', { il: il.toUpperCase(), eczaneler: [], title: 'Hata' });
     }
 });
 
-// DİĞER SAYFALAR
 app.get('/temizle', (req, res) => {
     if (fs.existsSync(dataFolder)) {
         fs.rmSync(dataFolder, { recursive: true, force: true });
         fs.mkdirSync(dataFolder);
     }
-    res.send("✅ Depo sıfırlandı.");
+    res.send("✅ Temizlendi.");
 });
 
-app.get('/ads.txt', (req, res) => res.send('google.com, pub-1894587939365426, DIRECT, f08c47fec0942fa0'));
+// Otomatik Temizlik (Sabah 09:00)
+cron.schedule('0 9 * * *', () => {
+    if (fs.existsSync(dataFolder)) {
+        fs.readdirSync(dataFolder).forEach(file => fs.unlinkSync(path.join(dataFolder, file)));
+    }
+}, { timezone: "Europe/Istanbul" });
 
-// SUNUCU BAŞLATMA
+// Sunucuyu başlat
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-    console.log(`Eczane360 ${PORT} portunda aktif!`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Sunucu ${PORT} portunda aktif.`);
 });
