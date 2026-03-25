@@ -6,6 +6,7 @@ const fs = require('fs');
 
 const app = express();
 
+// --- AYARLAR ---
 const NOSY_TOKEN = 'CSsas9Y81PH7hgA3I1n6n3AHgKSQW32fmndxsNWSqzaHARVAorMP5rJyJ5oK'; 
 const BASE_URL = 'https://www.nosyapi.com/apiv2/service/pharmacies-on-duty';
 
@@ -17,6 +18,7 @@ app.use(expressLayouts);
 app.set('layout', 'layout');
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Filtreleme için temizlik
 const normalizeText = (str) => {
     if (!str) return "";
     return str.toString().toLowerCase()
@@ -52,6 +54,7 @@ async function getEczaneler(sehir) {
     }
 }
 
+// --- ANA ROTA ---
 app.get('/eczaneler/:il/:ilce?', async (req, res) => {
     const il = req.params.il;
     const ilceReq = req.params.ilce || "";
@@ -60,11 +63,11 @@ app.get('/eczaneler/:il/:ilce?', async (req, res) => {
         const hamVeriler = await getEczaneler(il);
         
         let formatli = hamVeriler.map(e => {
-            // NOSYAPI'NİN TÜM İHTİMAL DAHİLİNDEKİ ANAHTARLARINI KONTROL EDİYORUZ
-            const ad = e.name || e.EczaneAdi || e.eczaneAdi || e.Ad || "İsimsiz Eczane";
-            const adres = e.address || e.Adresi || e.adresi || e.Adres || "Adres bilgisi yok";
-            const tel = (e.phone || e.Telefon || e.telefon || "").replace(/\D/g, '');
-            const eczaneIlce = e.dist || e.district || e.ilceAd || e.IlceAd || il;
+            // SÜPER YAKALAYICI: API'den ne gelirse gelsin ismi ve adresi bulur
+            const ad = e.name || e.EczaneAdi || e.Ad || e.Name || e.eczaneadi || e.title || "ECZANE";
+            const adres = e.address || e.Adresi || e.Adres || e.Address || e.adresi || "Adres Bulunamadı";
+            const tel = (e.phone || e.Telefon || e.telefon || e.Phone || "").replace(/\D/g, '');
+            const eczaneIlce = e.dist || e.district || e.IlceAd || e.District || il;
 
             return {
                 ad: ad.toUpperCase(),
@@ -90,14 +93,16 @@ app.get('/eczaneler/:il/:ilce?', async (req, res) => {
     }
 });
 
+// Cache temizleme
 app.get('/temizle', (req, res) => {
     if (fs.existsSync(dataFolder)) {
         fs.rmSync(dataFolder, { recursive: true, force: true });
         fs.mkdirSync(dataFolder);
     }
-    res.send("✅ Önbellek temizlendi.");
+    res.send("✅ Depo Sıfırlandı! Şimdi sayfaları yenileyebilirsin.");
 });
 
+// Diğer Sayfalar
 app.get('/', (req, res) => res.render('index', { title: 'Eczane360' }));
 app.get('/hakkimizda', (req, res) => res.render('hakkimizda', { title: 'Hakkımızda' }));
 app.get('/kvkk', (req, res) => res.render('kvkk', { title: 'KVKK' }));
@@ -105,4 +110,4 @@ app.get('/iletisim', (req, res) => res.render('iletisim', { title: 'İletişim' 
 app.get('/ads.txt', (req, res) => res.send('google.com, pub-1894587939365426, DIRECT, f08c47fec0942fa0'));
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`Eczane360 Port ${PORT} üzerinde aktif.`));
+app.listen(PORT, () => console.log(`Eczane360 Port ${PORT} üzerinde devrede.`));
