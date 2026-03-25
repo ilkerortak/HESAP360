@@ -13,6 +13,7 @@ app.use(expressLayouts);
 app.set('layout', 'layout'); 
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Türkçe Karakter Temizleme
 const trToEn = (str) => {
     if (!str) return "";
     return str.toLowerCase()
@@ -21,6 +22,7 @@ const trToEn = (str) => {
         .trim();
 };
 
+// API'ye sadece şehri soran fonksiyon
 async function getEczaneler(city) {
     const cacheKey = `eczaneler_${trToEn(city)}`;
     const cachedData = myCache.get(cacheKey);
@@ -28,8 +30,9 @@ async function getEczaneler(city) {
     if (cachedData) return cachedData;
 
     try {
-        // DİKKAT: Burada sadece city gönderiyoruz, dist (ilçe) yok!
-        let url = `https://api.collectapi.com/health/dutyPharmacy?city=${trToEn(city)}`;
+        const safeCity = trToEn(city);
+        // DİKKAT: dist parametresini tamamen kaldırdık, 400 hatası artık gelmez
+        let url = `https://api.collectapi.com/health/dutyPharmacy?city=${safeCity}`;
 
         const response = await axios.get(url, {
             headers: { 'authorization': API_KEY }
@@ -50,14 +53,21 @@ async function getEczaneler(city) {
 app.get('/eczaneler/:il/:ilce?', async (req, res) => {
     try {
         const il = req.params.il || "sakarya";
-        const ilce = req.params.ilce || "";
+        const ilce = req.params.ilce ? req.params.ilce.toLowerCase() : "";
         
-        // Önce şehrin tamamını çekiyoruz
+        // Önce şehrin tamamını çekiyoruz (API buna her zaman 200 OK verir)
         let tumEczaneler = await getEczaneler(il);
         
-        // Eğer ilçe seçilmişse, süzgeci burada biz devreye sokuyoruz
+        // Filtreleme mantığı: Eğer ilçe seçilmişse liste içinden biz ayıklıyoruz
         if (ilce) {
-            tumEczaneler = tumEczaneler.filter(e => trToEn(e.dist) === trToEn(ilce));
+            tumEczaneler = tumEczaneler.filter(e => {
+                const apiIlce = trToEn(e.dist);
+                // "adapazari" seçildiyse hem "adapazari" hem de "merkez" olanları getir
+                if (ilce === "adapazari") {
+                    return apiIlce === "adapazari" || apiIlce === "merkez";
+                }
+                return apiIlce === trToEn(ilce);
+            });
         }
         
         const formatliEczaneler = tumEczaneler.map(e => ({
@@ -83,5 +93,5 @@ app.get('/ads.txt', (req, res) => {
     res.send('google.com, pub-1894587939365426, DIRECT, f08c47fec0942fa0');
 });
 
-const PORT = process.env.PORT || 8080; // Loglarda 8080 gördüm, öyle kalsın
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Sistem ${PORT} portunda aktif!`));
