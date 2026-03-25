@@ -1,7 +1,7 @@
 {
   "name": "eczane360",
   "version": "1.0.0",
-  "description": "Nöbetçi Eczane Platformu",
+  "description": "Nobetci Eczane Platformu",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
@@ -11,5 +11,8 @@
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
     "node-cron": "^3.0.3"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
