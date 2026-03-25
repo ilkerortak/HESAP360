@@ -42,7 +42,6 @@ async function getEczaneler(sehir, ilce = "") {
         });
 
         const result = response.data.data || [];
-        
         if (result.length > 0) {
             fs.writeFileSync(dosyaYolu, JSON.stringify(result));
             return result;
@@ -61,61 +60,51 @@ cron.schedule('0 9 * * *', () => {
             for (const file of files) {
                 fs.unlinkSync(path.join(dataFolder, file));
             }
-            console.log(`[${new Date().toLocaleString('tr-TR')}] Sabah temizliği yapıldı: ${files.length} dosya silindi.`);
+            console.log("Sabah temizliği yapıldı.");
         } catch (err) {
-            console.error("Otomatik temizlik hatası:", err);
+            console.error("Temizlik hatası:", err);
         }
     }
-}, {
-    scheduled: true,
-    timezone: "Europe/Istanbul"
-});
+}, { timezone: "Europe/Istanbul" });
 
 // --- ROTALAR ---
+
+// ANA SAYFA (Hatanın kaynağı burası olabilir, en üste aldım)
+app.get('/', (req, res) => {
+    res.render('index', { title: 'Eczane360 | Nöbetçi Eczaneler' });
+});
+
+// ECZANE LİSTESİ
 app.get('/eczaneler/:il/:ilce?', async (req, res) => {
     const il = req.params.il;
     const ilceReq = req.params.ilce || "";
-
     try {
         const hamVeriler = await getEczaneler(il, ilceReq);
-        
-        const formatli = hamVeriler.map(e => {
-            const ad = e.pharmacyName || e.name || e.EczaneAd || "Bilinmiyor";
-            const adres = e.address || e.Adresi || "Adres bilgisi yok";
-            const tel = (e.phone || "").toString().replace(/\D/g, '');
-            const eczaneIlce = e.district || e.ilce || il;
-
-            return {
-                ad: ad.toUpperCase(),
-                adres: adres,
-                tel: tel,
-                ilce: eczaneIlce.toUpperCase()
-            };
-        });
-
-        res.render('liste', { 
-            il: il.toUpperCase(), 
-            eczaneler: formatli,
-            title: `${il.toUpperCase()} Nöbetçi Eczaneler`
-        });
-
+        const formatli = hamVeriler.map(e => ({
+            ad: (e.pharmacyName || e.name || "Bilinmiyor").toUpperCase(),
+            adres: e.address || "Adres bilgisi yok",
+            tel: (e.phone || "").toString().replace(/\D/g, ''),
+            ilce: (e.district || il).toUpperCase()
+        }));
+        res.render('liste', { il: il.toUpperCase(), eczaneler: formatli, title: `${il.toUpperCase()} Nöbetçi Eczaneler` });
     } catch (err) {
         res.render('liste', { il: il.toUpperCase(), eczaneler: [], title: 'Hata' });
     }
 });
 
+// DİĞER SAYFALAR
 app.get('/temizle', (req, res) => {
     if (fs.existsSync(dataFolder)) {
         fs.rmSync(dataFolder, { recursive: true, force: true });
         fs.mkdirSync(dataFolder);
     }
-    res.send("✅ Depo manuel olarak sıfırlandı.");
+    res.send("✅ Depo sıfırlandı.");
 });
 
-app.get('/', (req, res) => res.render('index', { title: 'Eczane360' }));
 app.get('/ads.txt', (req, res) => res.send('google.com, pub-1894587939365426, DIRECT, f08c47fec0942fa0'));
 
+// SUNUCU BAŞLATMA
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-    console.log(`Eczane360 ${PORT} portunda yayında ve sabah 09:00 temizliği aktif!`);
+    console.log(`Eczane360 ${PORT} portunda aktif!`);
 });
