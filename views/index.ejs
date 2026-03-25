@@ -1,30 +1,35 @@
-<div class="apple-card" style="text-align: center;">
-    <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 10px;">Nöbetçi Eczane Bul</h1>
-    <p style="opacity: 0.6; margin-bottom: 30px;">İl ve ilçe seçerek anlık listeye ulaşın.</p>
+<div class="apple-card" style="text-align: center; max-width: 500px; margin: 0 auto;">
+    <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; color: var(--text);">Nöbetçi Eczane Bul</h1>
+    <p style="opacity: 0.6; margin-bottom: 30px; color: var(--text);">İl ve ilçe seçerek anlık listeye ulaşın.</p>
 
     <div style="display: flex; flex-direction: column; gap: 15px;">
-        <select id="il-secim" onchange="ilceGuncelle()" style="padding: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 1rem; cursor: pointer;">
+        <select id="il-secim" onchange="ilceGuncelle()" style="padding: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 1rem; cursor: pointer; outline: none;">
             <option value="">İl Seçiniz</option>
             <option value="sakarya">Sakarya</option>
             <option value="istanbul">İstanbul</option>
             <option value="ankara">Ankara</option>
+            <option value="izmir">İzmir</option>
+            <option value="kocaeli">Kocaeli</option>
         </select>
 
-        <select id="ilce-secim" style="padding: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 1rem; cursor: pointer;">
+        <select id="ilce-secim" style="padding: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 1rem; cursor: pointer; outline: none;">
             <option value="">Önce İl Seçiniz</option>
         </select>
 
-        <button onclick="gitEczaneye()" style="padding: 18px; border-radius: 15px; border: none; background: var(--blue); color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 10px;">
+        <button onclick="gitEczaneye()" style="padding: 18px; border-radius: 15px; border: none; background: #007AFF; color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 10px; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
             Eczaneleri Listele →
         </button>
     </div>
 </div>
 
 <script>
+    // İlçe Listesi (Genişletilmiş)
     const ilceler = {
-        sakarya: ["Adapazarı", "Serdivan", "Erenler", "Hendek", "Akyazı", "Sapanca", "Karasu", "Geyve", "Arifiye"],
-        istanbul: ["Kadıköy", "Beşiktaş", "Üsküdar", "Şişli", "Fatih"],
-        ankara: ["Çankaya", "Keçiören", "Yenimahalle", "Mamak"]
+        sakarya: ["Adapazarı", "Serdivan", "Erenler", "Hendek", "Akyazı", "Sapanca", "Karasu", "Geyve", "Arifiye", "Pamukova", "Ferizli", "Kocaali", "Söğütlü", "Kaynarca", "Taraklı"],
+        istanbul: ["Kadıköy", "Beşiktaş", "Üsküdar", "Şişli", "Fatih", "Esenyurt", "Pendik", "Ümraniye"],
+        ankara: ["Çankaya", "Keçiören", "Yenimahalle", "Mamak", "Etimesgut", "Sincan"],
+        izmir: ["Konak", "Karşıyaka", "Bornova", "Buca", "Çiğli"],
+        kocaeli: ["İzmit", "Gebze", "Gölcük", "Körfez", "Kartepe", "Başiskele"]
     };
 
     function ilceGuncelle() {
@@ -33,8 +38,9 @@
         ilceSelect.innerHTML = '<option value="">İlçe Seçiniz</option>';
         
         if (il && ilceler[il]) {
-            ilceler[il].forEach(ilce => {
+            ilceler[il].sort().forEach(ilce => {
                 const opt = document.createElement('option');
+                // API'ye gönderirken küçük harf ve Türkçe karakter sorunu olmaması için
                 opt.value = ilce.toLowerCase();
                 opt.innerHTML = ilce;
                 ilceSelect.appendChild(opt);
@@ -45,10 +51,15 @@
     function gitEczaneye() {
         const il = document.getElementById('il-secim').value;
         const ilce = document.getElementById('ilce-secim').value;
+        
         if (il && ilce) {
-            window.location.href = `/eczaneler/${il}/${ilce}`;
+            // Loading efekti (opsiyonel)
+            document.querySelector('button').innerHTML = "Yükleniyor...";
+            window.location.href = "/eczaneler/" + il + "/" + ilce;
+        } else if (il) {
+            window.location.href = "/eczaneler/" + il;
         } else {
-            alert("Lütfen il ve ilçe seçiniz.");
+            alert("Lütfen en azından bir il seçiniz.");
         }
     }
 </script>
