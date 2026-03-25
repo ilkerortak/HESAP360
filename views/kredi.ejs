@@ -2,81 +2,62 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Kredi Karşılaştırma | Hesap360</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kredi Karşılaştır | Hesap360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --main: #6366f1; --bg: #0f172a; --border: rgba(255, 255, 255, 0.1); }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        
-        .panel { background: #1e293b; border-radius: 24px; padding: 30px; margin-bottom: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .input-group label { display: block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px; font-weight: 600; }
-        .input-group b { font-size: 1.4rem; color: var(--main); }
-        input[type="range"] { width: 100%; height: 6px; background: #334155; border-radius: 5px; appearance: none; margin-top: 15px; }
-        input[type="range"]::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; background: #fff; border-radius: 50%; cursor: pointer; border: 4px solid var(--main); }
-
-        .bank-card { 
-            background: #1e293b; border: 1px solid var(--border); border-radius: 20px; 
-            padding: 25px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between;
-            transition: 0.3s;
-        }
-        .bank-card:hover { border-color: var(--main); }
-        .logo-box { background: #fff; width: 120px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; padding: 5px; }
-        .logo-box img { max-width: 90%; max-height: 80%; object-fit: contain; }
-        
-        .val { text-align: center; }
-        .val small { color: #64748b; font-size: 0.75rem; display: block; margin-bottom: 5px; }
-        .val b { font-size: 1.1rem; }
-
-        .btn { background: var(--main); color: #fff; text-decoration: none; padding: 12px 25px; border-radius: 14px; font-weight: 700; font-size: 0.9rem; }
+        :root { --blue: #0066ff; --bg: #f8fafc; --border: #edf2f7; }
+        body { background: var(--bg); font-family: 'Plus Jakarta Sans', sans-serif; color: #1a1a1a; margin: 0; }
+        .container { max-width: 900px; margin: 50px auto; padding: 0 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .filter-box { background: #fff; padding: 35px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); margin-bottom: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; border: 1px solid var(--border); }
+        .f-item label { display: block; font-size: 0.85rem; color: #64748b; font-weight: 700; margin-bottom: 10px; }
+        .f-item b { font-size: 1.4rem; color: var(--blue); }
+        input[type="range"] { width: 100%; accent-color: var(--blue); margin-top: 15px; cursor: pointer; }
+        .bank-item { background: #fff; padding: 25px; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border); margin-bottom: 15px; transition: 0.3s; }
+        .bank-item:hover { border-color: var(--blue); transform: scale(1.01); }
+        .logo-box img { height: 45px; width: 110px; object-fit: contain; }
+        .val-item small { color: #94a3b8; display: block; font-size: 0.7rem; font-weight: 800; margin-bottom: 4px; }
+        .val-item b { font-size: 1.15rem; }
+        .apply-btn { background: var(--blue); color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 14px; font-weight: 700; font-size: 0.9rem; }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="/" style="color:#94a3b8; text-decoration:none; font-size:0.9rem;">← Ana Sayfaya Dön</a>
-        <h2 style="margin: 20px 0 30px;">Kredi Teklifleri</h2>
-
-        <div class="panel">
-            <div class="input-group">
-                <label>KREDİ TUTARI</label>
-                <b id="aT">100.000 ₺</b>
-                <input type="range" id="amount" min="10000" max="1000000" step="10000" value="100000" oninput="run()">
-            </div>
-            <div class="input-group">
-                <label>VADE SÜRESİ</label>
-                <b id="tT">12 AY</b>
-                <input type="range" id="term" min="3" max="36" step="1" value="12" oninput="run()">
-            </div>
+        <div class="header">
+            <h2 style="font-weight: 800; letter-spacing: -1px;">Kredi Teklifleri</h2>
+            <a href="/" style="color: var(--blue); text-decoration: none; font-weight: 700;">← Geri Dön</a>
         </div>
-
-        <div id="list">
+        <div class="filter-box">
+            <div class="f-item"><label>KREDİ TUTARI</label><b id="aT">100.000 TL</b><input type="range" id="amount" min="10000" max="1000000" step="10000" value="100000" oninput="update()"></div>
+            <div class="f-item"><label>VADE (AY)</label><b id="tT">12 AY</b><input type="range" id="term" min="3" max="36" step="1" value="12" oninput="update()"></div>
+        </div>
+        <div id="results">
             <% banks.forEach(bank => { %>
-                <div class="bank-card" data-rate="<%= bank.krediOran %>">
+                <div class="bank-item" data-rate="<%= bank.kredi %>">
                     <div class="logo-box"><img src="<%= bank.logo %>"></div>
-                    <div class="val"><small>FAİZ</small><b>%<%= bank.krediOran %></b></div>
-                    <div class="val"><small>TAKSİT</small><b class="i">0 ₺</b></div>
-                    <div class="val"><small>TOPLAM</small><b class="t">0 ₺</b></div>
-                    <a href="#" class="btn">Başvur</a>
+                    <div class="val-item"><small>AYLIK FAİZ</small><b>%<%= bank.kredi %></b></div>
+                    <div class="val-item"><small>TAKSİT</small><b class="iVal">0 TL</b></div>
+                    <div class="val-item"><small>TOPLAM</small><b class="tVal">0 TL</b></div>
+                    <a href="#" class="apply-btn">Başvur</a>
                 </div>
             <% }) %>
         </div>
     </div>
-
     <script>
-        function run() {
+        function update() {
             const a = parseFloat(document.getElementById('amount').value);
             const t = parseInt(document.getElementById('term').value);
-            document.getElementById('aT').innerText = a.toLocaleString('tr-TR') + " ₺";
+            document.getElementById('aT').innerText = a.toLocaleString('tr-TR') + " TL";
             document.getElementById('tT').innerText = t + " AY";
-
-            document.querySelectorAll('.bank-card').forEach(c => {
+            document.querySelectorAll('.bank-item').forEach(c => {
                 const r = parseFloat(c.getAttribute('data-rate')) / 100;
                 const inst = (a * r * Math.pow(1 + r, t)) / (Math.pow(1 + r, t) - 1);
-                c.querySelector('.i').innerText = Math.floor(inst).toLocaleString('tr-TR') + " ₺";
-                c.querySelector('.t').innerText = Math.floor(inst * t).toLocaleString('tr-TR') + " ₺";
+                c.querySelector('.iVal').innerText = Math.floor(inst).toLocaleString('tr-TR') + " TL";
+                c.querySelector('.tVal').innerText = Math.floor(inst * t).toLocaleString('tr-TR') + " TL";
             });
         }
-        window.onload = run;
+        window.onload = update;
     </script>
 </body>
 </html>
