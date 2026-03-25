@@ -1,15 +1,25 @@
-<div style="margin-bottom: 30px;">
-    <a href="/" style="text-decoration: none; color: var(--blue); font-weight: 600;">← Geri Dön</a>
-    <h1 style="margin-top: 10px;"><%= il %> Nöbetçi Eczaneler</h1>
-</div>
-
 <% eczaneler.forEach(e => { %>
-    <div class="apple-card" style="display: flex; justify-content: space-between; align-items: center;">
-        <div>
-            <h2 style="margin: 0; color: var(--blue);"><%= e.ad %></h2>
-            <p style="opacity: 0.7; margin: 5px 0;"><%= e.adres %></p>
-            <a href="<%= e.konum %>" target="_blank" style="color: var(--text); font-size: 0.9rem;">📍 Haritada Gör</a>
+    <div class="apple-card">
+        <div class="card-content">
+            <h2 style="color: var(--blue); margin:0;"><%= e.ad %></h2>
+            <p style="opacity: 0.7; margin: 8px 0;"><%= e.adres %></p>
+            
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <a href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(e.ad + ' ' + e.adres) %>" 
+                   target="_blank" 
+                   style="text-decoration:none; font-size: 0.9rem; color: var(--text); font-weight: 600;">
+                   📍 Haritada Odakla
+                </a>
+                
+                <span>|</span>
+
+                <a href="https://www.google.com/maps/dir/?api=1&destination=<%= encodeURIComponent(e.ad + ' ' + e.adres) %>" 
+                   target="_blank" 
+                   style="text-decoration:none; font-size: 0.9rem; color: var(--blue); font-weight: 600;">
+                   🚗 Yol Tarifi
+                </a>
+            </div>
         </div>
-        <a href="tel:<%= e.tel %>" class="btn-call"><i class="fa-solid fa-phone"></i> Ara</a>
+        <a href="tel:<%= e.tel %>" class="btn-call"><i class="fa-solid fa-phone"></i></a>
     </div>
 <% }) %>
