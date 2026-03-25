@@ -21,23 +21,45 @@ app.use(express.static(path.join(__dirname, 'public')));
 // --- TEMİZLİK FONKSİYONU ---
 function temizleData() {
     if (fs.existsSync(dataFolder)) {
-        const files = fs.readdirSync(dataFolder);
-        files.forEach(file => fs.unlinkSync(path.join(dataFolder, file)));
-        console.log("Otomatik temizlik yapıldı.");
+        try {
+            const files = fs.readdirSync(dataFolder);
+            files.forEach(file => fs.unlinkSync(path.join(dataFolder, file)));
+            console.log("Otomatik temizlik yapıldı.");
+        } catch (err) {
+            console.error("Temizlik hatası:", err);
+        }
     }
 }
 
-// OTOMATİK KONTROL (Her 30 dakikada bir saati kontrol eder)
+// OTOMATİK KONTROL (Sabah 09:00 kontrolü)
 setInterval(() => {
     const simdi = new Date().toLocaleTimeString('tr-TR', { timeZone: 'Europe/Istanbul', hour: '2-digit', minute: '2-digit' });
-    if (simdi === "09:00") { // Tam sabah 09:00 ise temizle
+    if (simdi === "09:00") {
         temizleData();
     }
-}, 1000 * 60 * 30); // 30 dakikada bir kontrol
+}, 1000 * 60); // Her dakika kontrol etmek daha garantidir
 
 // --- ROTALAR ---
-app.get('/', (req, res) => res.render('index', { title: 'Eczane360' }));
 
+// Ana Sayfa
+app.get('/', (req, res) => res.render('index', { title: 'Eczane360 | Türkiye Nöbetçi Eczaneler' }));
+
+// Hakkımızda Sayfası
+app.get('/hakkimizda', (req, res) => {
+    res.render('hakkimizda', { title: 'Hakkımızda | Eczane360' });
+});
+
+// KVKK Sayfası
+app.get('/kvkk', (req, res) => {
+    res.render('kvkk', { title: 'KVKK | Eczane360' });
+});
+
+// İletişim Sayfası
+app.get('/iletisim', (req, res) => {
+    res.render('iletisim', { title: 'İletişim | Eczane360' });
+});
+
+// Eczane Listeleme
 app.get('/eczaneler/:il/:ilce?', async (req, res) => {
     const il = req.params.il;
     const ilceReq = req.params.ilce || "";
@@ -61,11 +83,13 @@ app.get('/eczaneler/:il/:ilce?', async (req, res) => {
     }
 });
 
+// Temizlik Rotası
 app.get('/temizle', (req, res) => {
     temizleData();
     res.send("✅ Manuel temizlendi.");
 });
 
+// Reklam ve Doğrulama
 app.get('/ads.txt', (req, res) => res.send('google.com, pub-1894587939365426, DIRECT, f08c47fec0942fa0'));
 
 const PORT = process.env.PORT || 8080;
