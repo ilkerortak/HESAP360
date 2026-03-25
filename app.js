@@ -6,7 +6,7 @@ const path = require('path');
 const app = express();
 
 const myCache = new NodeCache({ stdTTL: 3600 }); // 1 saat hafızada tut
-const API_KEY = 'apikey 5N7M7f6Xp6Q1R1S1:7j9B8V8C8D8E8F8'; 
+const API_KEY = 'apikey 7wJjAEEMSukKl5nldRYtXC:6GY6N50VmT4y8dke6TWkyu'; 
 
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
