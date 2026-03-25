@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title><%= baslik %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #020617; --surface: #0f172a; --primary: #3b82f6; --text-dim: #94a3b8; }
+        body { background: var(--bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.8; margin: 0; }
+        .container { max-width: 800px; margin: 60px auto; padding: 40px; background: var(--surface); border-radius: 24px; border: 1px solid rgba(255,255,255,0.08); }
+        h1 { color: var(--primary); font-size: 2rem; margin-bottom: 30px; }
+        .content { color: var(--text-dim); }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: var(--primary); text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-btn">← Ana Sayfaya Dön</a>
+        <h1><%= baslik %></h1>
+        
+        <div class="content">
+            <% if(sayfa === 'hakkimizda') { %>
+                <p>Hesap360, 2026 yılında kullanıcıların en doğru finansal kararları vermesini sağlamak amacıyla kurulmuş bağımsız bir karşılaştırma platformudur.</p>
+                <p>Amacımız; karmaşık bankacılık verilerini sadeleştirerek, kullanıcılarımıza en avantajlı kredi ve mevduat seçeneklerini sunmaktır.</p>
+            <% } else if(sayfa === 'kvkk') { %>
+                <p>6698 sayılı Kişisel Verilerin Korunması Kanunu uyarınca, verileriniz sadece hesaplama optimizasyonu için anonim olarak işlenmektedir.</p>
+                <p>Hesap360, kullanıcıların bankacılık şifrelerini veya gizli bilgilerini asla talep etmez.</p>
+            <% } else if(sayfa === 'iletisim') { %>
+                <p>Sorularınız ve iş birliği talepleriniz için bize ulaşın:</p>
+                <p><b>E-posta:</b> destek@hesap360.com</p>
+                <p><b>Adres:</b> Finans Teknopark, Sakarya/Türkiye</p>
+            <% } else { %>
+                <p>Bu platformu kullanarak finansal verilerin doğruluğunu kabul etmiş sayılırsınız. Veriler bilgilendirme amaçlıdır.</p>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
