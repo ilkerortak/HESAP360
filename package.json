@@ -1,16 +1,12 @@
 {
-  "name": "hesap360",
-  "version": "4.2.0",
-  "description": "Hesap360 Pro",
+  "name": "eczane360",
+  "version": "1.0.0",
+  "description": "Nöbetçi Eczane Bulucu",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "ejs": "^3.1.9"
-  },
-  "engines": {
-    "node": "18.x"
+    "express": "^4.18.2"
   }
 }
