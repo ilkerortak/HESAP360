@@ -108,6 +108,15 @@ app.get('/', (req, res) => {
     res.render('index', { title: 'Eczane360' });
 });
 
+app.get('/temizle', (req, res) => {
+    if (fs.existsSync(dataFolder)) {
+        fs.rmSync(dataFolder, { recursive: true, force: true });
+        fs.mkdirSync(dataFolder);
+        return res.send("✅ Depo boşaltıldı! Şimdi sayfayı yenileyip taze veriyi çekebilirsin.");
+    }
+    res.send("Zaten depo boş.");
+});
+
 app.get('/ads.txt', (req, res) => {
     res.send('google.com, pub-1894587939365426, DIRECT, f08c47fec0942fa0');
 });
