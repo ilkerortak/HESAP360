@@ -1,7 +1,7 @@
 {
   "name": "hesap360",
   "version": "4.2.0",
-  "description": "Hesap360 Finans Platformu",
+  "description": "Hesap360 Pro",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
