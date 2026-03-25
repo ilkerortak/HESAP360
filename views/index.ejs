@@ -3,112 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hesap360 | Kredi, Mevduat ve Kart Karşılaştırma Merkezi</title>
+    <meta name="description" content="Hesap360 - Kredi, mevduat ve kredi kartı karşılaştırma platformu.">
+    <title>Hesap360 | Finansal Karşılaştırma ve Analiz Merkezi</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root { 
-            --bg: #020617; /* Asil Gece Mavisi */
-            --surface: #0f172a; /* Derin Yüzey Siyahı */
-            --primary: #3b82f6; /* Canlı Neon Mavi */
-            --primary-glow: rgba(59, 130, 246, 0.25); /* Mavi Işıltı */
-            --border: rgba(255, 255, 255, 0.08); /* Şeffaf Sınır Çizgisi */
-            --text-dim: #94a3b8; /* Soluk Gri Yazı */
+            --bg: #020617; 
+            --surface: #0f172a; 
+            --primary: #3b82f6; 
+            --primary-glow: rgba(59, 130, 246, 0.15); 
+            --border: rgba(255, 255, 255, 0.08); 
+            --text-dim: #94a3b8; 
         }
 
         body { 
             background: var(--bg); font-family: 'Plus Jakarta Sans', sans-serif; color: #fff; margin: 0; 
-            /* Üstten Gelen Mavi Aura Efekti */
-            background-image: radial-gradient(circle at 50% -20%, var(--primary-glow) 0%, transparent 50%);
+            background-image: radial-gradient(circle at 50% -10%, var(--primary-glow) 0%, transparent 40%);
             min-height: 100vh;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-        /* Canlı Piyasa Bandı (Ticker) */
+        /* Piyasa Bandı - Kurumsal ve Sade */
         .ticker { 
-            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border); padding: 12px 0; font-size: 0.85rem; 
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border); padding: 10px 0; font-size: 0.8rem; letter-spacing: 0.5px;
         }
-        .ticker span { margin-right: 25px; color: var(--text-dim); }
-        .ticker b { color: var(--primary); margin-left: 5px; }
+        .ticker .inner { display: flex; justify-content: center; gap: 30px; }
+        .ticker span { color: var(--text-dim); font-weight: 500; }
+        .ticker b { color: #fff; margin-left: 6px; }
 
-        /* Header & Logo */
-        nav { padding: 30px 0; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.8rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -1px; }
+        /* Navigasyon - Temiz Logo */
+        nav { padding: 25px 0; display: flex; justify-content: center; align-items: center; }
+        .logo { font-size: 1.6rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -1px; }
         .logo span { color: var(--primary); }
 
-        /* Hero Bölümü */
-        .hero { padding: 80px 0 60px; text-align: center; }
-        .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 15px; line-height: 1.1; }
+        /* Hero - Güven Odaklı Başlık */
+        .hero { padding: 60px 0 50px; text-align: center; }
+        .hero h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 800; margin-bottom: 20px; color: #fff; }
         .hero h1 span { color: var(--primary); }
-        .hero p { color: var(--text-dim); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .hero p { color: var(--text-dim); font-size: 1.15rem; max-width: 650px; margin: 0 auto; line-height: 1.6; }
 
-        /* Ana Servis Izgarası (Master Grid) */
+        /* Servis Kartları */
         .services-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 20px; 
-            margin-top: 50px; 
+            gap: 24px; 
+            margin-top: 40px; 
         }
 
         .service-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 35px;
+            border-radius: 24px;
+            padding: 40px 30px;
             text-decoration: none;
             color: inherit;
-            /* Yavaş ve Pürüzsüz Geçiş */
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
             position: relative;
-            overflow: hidden;
         }
 
-        /* Kart Üzerine Gelindiğinde (Hover) */
         .service-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             border-color: var(--primary);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            background: rgba(15, 23, 42, 0.8);
         }
 
-        /* Kart İkonu Stili */
         .service-card i {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: var(--primary);
-            margin-bottom: 20px;
-            background: var(--primary-glow);
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 16px;
+            margin-bottom: 24px;
+            background: rgba(59, 130, 246, 0.1);
+            width: 55px; height: 55px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 14px;
         }
 
-        .service-card h3 { font-size: 1.4rem; margin: 0 0 10px 0; font-weight: 700; }
-        .service-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; margin: 0; }
+        .service-card h3 { font-size: 1.3rem; margin: 0 0 12px 0; font-weight: 700; }
+        .service-card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.5; margin: 0; }
 
-        /* "Yeni" Etiketi */
-        .badge {
-            position: absolute; top: 20px; right: 20px;
-            background: var(--primary); color: #fff; font-size: 0.65rem;
-            padding: 4px 10px; border-radius: 20px; font-weight: 800;
-        }
-
-        /* Footer Alt Bilgi */
+        /* Kurumsal Footer */
         footer { 
-            margin-top: 100px; padding: 40px 0; text-align: center; 
+            margin-top: 80px; padding: 40px 0; text-align: center; 
             border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.85rem;
         }
+        .footer-links { margin-bottom: 15px; }
+        .footer-links a { color: var(--text-dim); text-decoration: none; margin: 0 10px; }
+        .footer-links a:hover { color: var(--primary); }
 
         @media (max-width: 768px) {
             .hero { padding: 40px 0; }
-            .services-grid { grid-template-columns: 1fr; }
+            .ticker .inner { gap: 15px; flex-wrap: wrap; }
         }
     </style>
 </head>
@@ -116,56 +104,59 @@
 
 <div class="ticker">
     <div class="container">
-        <span>USD/TRY <b><%= data.market.usd %></b></span>
-        <span>EUR/TRY <b><%= data.market.eur %></b></span>
-        <span>ALTIN (GR) <b><%= data.market.gold %></b></span>
-        <span style="float:right;"><i class="fa-solid fa-circle" style="color:#10b981; font-size:8px;"></i> CANLI PİYASA</span>
+        <div class="inner">
+            <span>USD <b><%= data.market.usd %></b></span>
+            <span>EUR <b><%= data.market.eur %></b></span>
+            <span>ALTIN <b><%= data.market.gold %></b></span>
+            <span style="color:#10b981;">● CANLI VERİ</span>
+        </div>
     </div>
 </div>
 
 <div class="container">
     <nav>
         <a href="/" class="logo">HESAP<span>360</span></a>
-        <div style="font-size: 0.8rem; color: var(--text-dim); font-weight: 600;">DARKNESS V5.0 MASTER</div>
     </nav>
 
     <header class="hero">
-        <h1>Finansal Analizde<br><span>Yeni Standart.</span></h1>
-        <p>HangiKredi ve Hesap Kurdu kalitesinde, reklamsız ve en hızlı hesaplama araçları.</p>
+        <h1>Finansal Kararınızı<br><span>Şansa Bırakmayın.</span></h1>
+        <p>En uygun kredi, en yüksek mevduat getirisi ve size özel kart analizleri ile tasarruf etmeye bugün başlayın.</p>
     </header>
 
     <div class="services-grid">
         <a href="/kredi" class="service-card">
-            <i class="fa-solid fa-layer-group"></i>
+            <i class="fa-solid fa-hand-holding-dollar"></i>
             <h3>Kredi Karşılaştır</h3>
-            <p>Tüm bankaların güncel faizlerini tek ekranda analiz et ve ödeme planını çıkar.</p>
+            <p>Onlarca bankanın tekliflerini anında listeleyin ve en düşük faizli krediye başvurun.</p>
         </a>
 
         <a href="/mevduat" class="service-card">
-            <i class="fa-solid fa-chart-line"></i>
+            <i class="fa-solid fa-piggy-bank"></i>
             <h3>Mevduat Getirisi</h3>
-            <p>Paranıza en yüksek faizi veren bankayı bul, stopaj kesintisini anında hesapla.</p>
+            <p>Birikimlerinizi en iyi değerlendirecek bankayı bulun, kazancınızı net olarak görün.</p>
         </a>
 
         <a href="/kredi-limit" class="service-card">
-            <i class="fa-solid fa-gauge-high"></i>
-            <h3>Limit Tahmini</h3>
-            <p>Banka rasyolarına göre ne kadar kredi çekebileceğini saniyeler içinde öğren.</p>
+            <i class="fa-solid fa-chart-pie"></i>
+            <h3>Limit Analizi</h3>
+            <p>Finansal durumunuza göre çekebileceğiniz maksimum kredi miktarını hesaplayın.</p>
         </a>
 
         <a href="/kredi-karti" class="service-card">
-            <span class="badge">YENİ</span>
             <i class="fa-solid fa-credit-card"></i>
-            <h3>Kredi Kartı Analizi</h3>
-            <p>Asgari ödeme tutarı, gecikme faizi ve limit politikalarını analiz edin.</p>
+            <h3>Kredi Kartları</h3>
+            <p>Kartların aidat, puan ve nakit avans özelliklerini inceleyerek doğru tercihi yapın.</p>
         </a>
     </div>
 
     <footer>
-        <p>© 2026 Hesap360 | Profesyonel Finansal Çözümler Merkezi</p>
-        <div style="margin-top: 10px;">
-            <i class="fa-brands fa-cc-visa"></i> &nbsp; <i class="fa-brands fa-cc-mastercard"></i> &nbsp; <i class="fa-solid fa-shield-halved"></i>
+        <div class="footer-links">
+            <a href="#">Hakkımızda</a>
+            <a href="#">Kullanım Koşulları</a>
+            <a href="#">KVKK</a>
+            <a href="#">İletişim</a>
         </div>
+        <p>© 2026 Hesap360. Tüm hakları saklıdır.</p>
     </footer>
 </div>
 
