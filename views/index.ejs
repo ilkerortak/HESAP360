@@ -1,50 +1,58 @@
-<div class="apple-card" style="text-align: center; max-width: 500px; margin: 0 auto;">
-    <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; color: var(--text);">Nöbetçi Eczane Bul</h1>
-    <p style="opacity: 0.6; margin-bottom: 30px; color: var(--text);">İl ve ilçe seçerek anlık listeye ulaşın.</p>
+<div class="apple-card" style="text-align: center; max-width: 500px; margin: 20px auto; padding: 30px; border-radius: 25px; background: #1c1c1e; border: 1px solid #333;">
+    <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; color: #fff;">Nöbetçi Eczane Bul</h1>
+    <p style="opacity: 0.6; margin-bottom: 30px; color: #fff;">Türkiye geneli il ve ilçe seçerek anlık listeye ulaşın.</p>
 
     <div style="display: flex; flex-direction: column; gap: 15px;">
-        <select id="il-secim" onchange="ilceGuncelle()" style="padding: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 1rem; cursor: pointer; outline: none;">
+        <select id="il-secim" onchange="ilceGuncelle()" style="padding: 15px; border-radius: 15px; border: 1px solid #444; background: #2c2c2e; color: #fff; font-size: 1rem; cursor: pointer; outline: none;">
             <option value="">İl Seçiniz</option>
-            <option value="sakarya">Sakarya</option>
-            <option value="istanbul">İstanbul</option>
-            <option value="ankara">Ankara</option>
-            <option value="izmir">İzmir</option>
-            <option value="kocaeli">Kocaeli</option>
+            <option value="Adana">Adana</option><option value="Adiyaman">Adıyaman</option><option value="Afyonkarahisar">Afyonkarahisar</option><option value="Agri">Ağrı</option><option value="Amasya">Amasya</option><option value="Ankara">Ankara</option><option value="Antalya">Antalya</option><option value="Artvin">Artvin</option><option value="Aydin">Aydın</option><option value="Balikesir">Balıkesir</option><option value="Bilecik">Bilecik</option><option value="Bingol">Bingöl</option><option value="Bitlis">Bitlis</option><option value="Bolu">Bolu</option><option value="Burdur">Burdur</option><option value="Bursa">Bursa</option><option value="Canakkale">Çanakkale</option><option value="Cankiri">Çankırı</option><option value="Corum">Çorum</option><option value="Denizli">Denizli</option><option value="Diyarbakir">Diyarbakır</option><option value="Edirne">Edirne</option><option value="Elazig">Elazığ</option><option value="Erzincan">Erzincan</option><option value="Erzurum">Erzurum</option><option value="Eskisehir">Eskişehir</option><option value="Gaziantep">Gaziantep</option><option value="Giresun">Giresun</option><option value="Gumushane">Gümüşhane</option><option value="Hakkari">Hakkari</option><option value="Hatay">Hatay</option><option value="Isparta">Isparta</option><option value="Mersin">Mersin</option><option value="Istanbul">İstanbul</option><option value="Izmir">İzmir</option><option value="Kars">Kars</option><option value="Kastamonu">Kastamonu</option><option value="Kayseri">Kayseri</option><option value="Kirklareli">Kırklareli</option><option value="Kirsehir">Kırşehir</option><option value="Kocaeli">Kocaeli</option><option value="Konya">Konya</option><option value="Kutahya">Kütahya</option><option value="Malatya">Malatya</option><option value="Manisa">Manisa</option><option value="Kahramanmaras">Kahramanmaraş</option><option value="Mardin">Mardin</option><option value="Mugla">Muğla</option><option value="Mus">Muş</option><option value="Nevsehir">Nevşehir</option><option value="Nigde">Niğde</option><option value="Ordu">Ordu</option><option value="Rize">Rize</option><option value="Sakarya">Sakarya</option><option value="Samsun">Samsun</option><option value="Siirt">Siirt</option><option value="Sinop">Sinop</option><option value="Sivas">Sivas</option><option value="Tekirdag">Tekirdağ</option><option value="Tokat">Tokat</option><option value="Trabzon">Trabzon</option><option value="Tunceli">Tunceli</option><option value="Sanliurfa">Şanlıurfa</option><option value="Usak">Uşak</option><option value="Van">Van</option><option value="Yozgat">Yozgat</option><option value="Zonguldak">Zonguldak</option><option value="Aksaray">Aksaray</option><option value="Bayburt">Bayburt</option><option value="Karaman">Karaman</option><option value="Kirikkale">Kırıkkale</option><option value="Batman">Batman</option><option value="Sirnak">Şırnak</option><option value="Bartin">Bartın</option><option value="Ardahan">Ardahan</option><option value="Igdir">Iğdır</option><option value="Yalova">Yalova</option><option value="Karabuk">Karabük</option><option value="Kilis">Kilis</option><option value="Osmaniye">Osmaniye</option><option value="Duzce">Düzce</option>
         </select>
 
-        <select id="ilce-secim" style="padding: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 1rem; cursor: pointer; outline: none;">
+        <select id="ilce-secim" style="padding: 15px; border-radius: 15px; border: 1px solid #444; background: #2c2c2e; color: #fff; font-size: 1rem; cursor: pointer; outline: none;">
             <option value="">Önce İl Seçiniz</option>
         </select>
 
-        <button onclick="gitEczaneye()" style="padding: 18px; border-radius: 15px; border: none; background: #007AFF; color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 10px; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        <button onclick="gitEczaneye()" style="padding: 18px; border-radius: 15px; border: none; background: #007AFF; color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 10px; transition: 0.3s;">
             Eczaneleri Listele →
         </button>
     </div>
 </div>
 
 <script>
-    // İlçe Listesi (Genişletilmiş)
-    const ilceler = {
-        sakarya: ["Adapazarı", "Serdivan", "Erenler", "Hendek", "Akyazı", "Sapanca", "Karasu", "Geyve", "Arifiye", "Pamukova", "Ferizli", "Kocaali", "Söğütlü", "Kaynarca", "Taraklı"],
-        istanbul: ["Kadıköy", "Beşiktaş", "Üsküdar", "Şişli", "Fatih", "Esenyurt", "Pendik", "Ümraniye"],
-        ankara: ["Çankaya", "Keçiören", "Yenimahalle", "Mamak", "Etimesgut", "Sincan"],
-        izmir: ["Konak", "Karşıyaka", "Bornova", "Buca", "Çiğli"],
-        kocaeli: ["İzmit", "Gebze", "Gölcük", "Körfez", "Kartepe", "Başiskele"]
-    };
-
-    function ilceGuncelle() {
+    // İl seçildiğinde ilçeleri Türkiye API üzerinden çeker
+    async function ilceGuncelle() {
         const il = document.getElementById('il-secim').value;
         const ilceSelect = document.getElementById('ilce-secim');
-        ilceSelect.innerHTML = '<option value="">İlçe Seçiniz</option>';
         
-        if (il && ilceler[il]) {
-            ilceler[il].sort().forEach(ilce => {
-                const opt = document.createElement('option');
-                // API'ye gönderirken küçük harf ve Türkçe karakter sorunu olmaması için
-                opt.value = ilce.toLowerCase();
-                opt.innerHTML = ilce;
-                ilceSelect.appendChild(opt);
-            });
+        if (!il) {
+            ilceSelect.innerHTML = '<option value="">Önce İl Seçiniz</option>';
+            return;
+        }
+
+        ilceSelect.innerHTML = '<option value="">İlçeler Yükleniyor...</option>';
+
+        try {
+            // Ücretsiz Türkiye API kullanarak ilçeleri getiriyoruz
+            const response = await fetch(`https://turkiyeapi.dev/api/v1/provinces?name=${il}`);
+            const data = await response.json();
+            
+            if (data.status === "OK" && data.data.length > 0) {
+                const ilceler = data.data[0].districts;
+                ilceSelect.innerHTML = '<option value="">İlçe Seçiniz (Tümü için boş bırakın)</option>';
+                
+                ilceler.sort((a, b) => a.name.localeCompare(b.name)).forEach(item => {
+                    const opt = document.createElement('option');
+                    // API'nin sevdiği formata getiriyoruz
+                    opt.value = item.name.replace(/İ/g, 'I').replace(/ı/g, 'i').toUpperCase();
+                    opt.innerHTML = item.name;
+                    ilceSelect.appendChild(opt);
+                });
+            } else {
+                ilceSelect.innerHTML = '<option value="">İlçe bulunamadı</option>';
+            }
+        } catch (error) {
+            console.error("İlçe çekme hatası:", error);
+            ilceSelect.innerHTML = '<option value="">Hata oluştu</option>';
         }
     }
 
@@ -52,14 +60,11 @@
         const il = document.getElementById('il-secim').value;
         const ilce = document.getElementById('ilce-secim').value;
         
-        if (il && ilce) {
-            // Loading efekti (opsiyonel)
-            document.querySelector('button').innerHTML = "Yükleniyor...";
-            window.location.href = "/eczaneler/" + il + "/" + ilce;
-        } else if (il) {
-            window.location.href = "/eczaneler/" + il;
+        if (il) {
+            const url = ilce ? `/eczaneler/${il}/${ilce}` : `/eczaneler/${il}`;
+            window.location.href = url;
         } else {
-            alert("Lütfen en azından bir il seçiniz.");
+            alert("Lütfen bir il seçiniz.");
         }
     }
 </script>
