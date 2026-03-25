@@ -3,89 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kredi Hesaplama Pro | Hesap360</title>
+    <title>Kredi Karşılaştırma | Hesap360 Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root { --bg: #020617; --surface: #0f172a; --primary: #3b82f6; --border: rgba(255, 255, 255, 0.08); --text-dim: #94a3b8; }
         body { background: var(--bg); font-family: 'Plus Jakarta Sans', sans-serif; color: #fff; margin: 0; background-image: radial-gradient(circle at 50% -20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%); }
         .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-        .calc-wrapper { display: grid; grid-template-columns: 380px 1fr; gap: 30px; }
-        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 30px; }
-        .input-group { margin-bottom: 20px; }
-        label { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--text-dim); font-size: 0.8rem; font-weight: 700; }
+        .hero-filter { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+        .input-group label { display: flex; justify-content: space-between; font-weight: 700; color: var(--text-dim); font-size: 0.8rem; margin-bottom: 10px; }
         input[type="range"] { width: 100%; accent-color: var(--primary); }
-        .res-box { background: rgba(59, 130, 246, 0.1); border: 1px solid var(--primary); padding: 20px; border-radius: 16px; text-align: center; margin-top: 20px; }
-        .table-container { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 30px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        th { text-align: left; padding: 12px; color: var(--text-dim); border-bottom: 1px solid var(--border); }
-        td { padding: 12px; border-bottom: 1px solid var(--border); }
-        .bank-item { background: var(--surface); border: 1px solid var(--border); padding: 20px; border-radius: 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        @media (max-width: 900px) { .calc-wrapper { grid-template-columns: 1fr; } }
+        .bank-card { background: var(--surface); border: 1px solid var(--border); padding: 25px; border-radius: 20px; display: grid; grid-template-columns: 150px 1fr 1fr 1fr 150px; align-items: center; gap: 20px; margin-bottom: 15px; transition: 0.3s; }
+        .bank-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .btn-apply { background: var(--primary); color: #fff; text-decoration: none; padding: 12px; border-radius: 12px; font-weight: 800; text-align: center; font-size: 0.9rem; }
+        .val { display: block; font-size: 1.2rem; font-weight: 800; }
+        .lbl { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; }
+        @media (max-width: 900px) { .bank-card { grid-template-columns: 1fr 1fr; text-align: center; } .hero-filter { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="container">
-        <nav style="margin-bottom: 30px;"><a href="/" style="color:#fff; text-decoration:none; font-weight:800; font-size:1.5rem;">HESAP<span>360</span></a></nav>
+        <nav style="margin-bottom:30px;"><a href="/" style="color:#fff; text-decoration:none; font-weight:800; font-size:1.6rem;">HESAP<span>360</span></a></nav>
         
-        <div class="calc-wrapper">
-            <div class="card">
-                <h3 style="margin-top:0;">Kredi Motoru</h3>
-                <div class="input-group">
-                    <label>TUTAR: <span id="aTxt">100.000 ₺</span></label>
-                    <input type="range" id="amount" min="10000" max="1000000" step="10000" value="100000" oninput="run()">
-                </div>
-                <div class="input-group">
-                    <label>VADE: <span id="tTxt">12 Ay</span></label>
-                    <input type="range" id="term" min="3" max="36" step="1" value="12" oninput="run()">
-                </div>
-                <div class="input-group">
-                    <label>FAİZ ORANI (%): <span id="rTxt">3.89</span></label>
-                    <input type="range" id="rate" min="1" max="10" step="0.01" value="3.89" oninput="run()">
-                </div>
-                <div class="res-box">
-                    <span style="font-size:0.7rem; color:var(--primary); font-weight:800;">AYLIK TAKSİT</span>
-                    <h2 id="mInst" style="margin:5px 0;">0 ₺</h2>
-                    <span id="totalReturn" style="font-size:0.8rem; color:var(--text-dim);">Toplam: 0 ₺</span>
-                </div>
+        <div class="hero-filter">
+            <div class="input-group">
+                <label>TUTAR: <span id="aTxt" style="color:var(--primary)">100.000 ₺</span></label>
+                <input type="range" id="amount" min="10000" max="2000000" step="10000" value="100000" oninput="updateAll()">
             </div>
+            <div class="input-group">
+                <label>VADE: <span id="tTxt" style="color:var(--primary)">12 AY</span></label>
+                <input type="range" id="term" min="3" max="36" step="1" value="12" oninput="updateAll()">
+            </div>
+        </div>
 
-            <div class="table-container">
-                <h3 style="margin-top:0;">Ödeme Planı Analizi</h3>
-                <table>
-                    <thead>
-                        <tr><th>No</th><th>Taksit</th><th>Anapara</th><th>Faiz+Vergi</th><th>Kalan</th></tr>
-                    </thead>
-                    <tbody id="pTable"></tbody>
-                </table>
-            </div>
+        <div id="bankList">
+            <% banks.forEach(bank => { %>
+                <div class="bank-card" data-rate="<%= bank.oran %>">
+                    <div class="bank-info"><img src="<%= bank.logo %>" width="60" style="filter: brightness(0) invert(1);"><br><b><%= bank.ad %></b></div>
+                    <div><span class="lbl">Faiz Oranı</span><span class="val" style="color:#10b981">%<%= bank.oran %></span></div>
+                    <div><span class="lbl">Aylık Taksit</span><span class="val inst">0 ₺</span></div>
+                    <div><span class="lbl">Toplam Ödeme</span><span class="val total">0 ₺</span></div>
+                    <a href="#" class="btn-apply">HEMEN BAŞVUR</a>
+                </div>
+            <% }) %>
         </div>
     </div>
 
     <script>
-        function run() {
-            const A = parseFloat(document.getElementById('amount').value);
-            const T = parseInt(document.getElementById('term').value);
-            const R = parseFloat(document.getElementById('rate').value) / 100;
-            
-            document.getElementById('aTxt').innerText = A.toLocaleString() + " ₺";
-            document.getElementById('tTxt').innerText = T + " Ay";
-            document.getElementById('rTxt').innerText = (R*100).toFixed(2);
+        function updateAll() {
+            const A = document.getElementById('amount').value;
+            const T = document.getElementById('term').value;
+            document.getElementById('aTxt').innerText = parseInt(A).toLocaleString() + " ₺";
+            document.getElementById('tTxt').innerText = T + " AY";
 
-            const M = (A * R * Math.pow(1 + R, T)) / (Math.pow(1 + R, T) - 1);
-            document.getElementById('mInst').innerText = Math.floor(M).toLocaleString() + " ₺";
-            document.getElementById('totalReturn').innerText = "Toplam Geri Ödeme: " + Math.floor(M * T).toLocaleString() + " ₺";
-
-            let table = ''; let balance = A;
-            for(let i=1; i<=T; i++) {
-                let interest = balance * R;
-                let principal = M - interest;
-                balance -= principal;
-                table += `<tr><td>${i}</td><td>${Math.floor(M).toLocaleString()}</td><td>${Math.floor(principal).toLocaleString()}</td><td>${Math.floor(interest).toLocaleString()}</td><td>${Math.max(0, Math.floor(balance)).toLocaleString()}</td></tr>`;
-            }
-            document.getElementById('pTable').innerHTML = table;
+            document.querySelectorAll('.bank-card').forEach(card => {
+                const R = parseFloat(card.dataset.rate) / 100;
+                const inst = (A * R * Math.pow(1 + R, T)) / (Math.pow(1 + R, T) - 1);
+                card.querySelector('.inst').innerText = Math.floor(inst).toLocaleString() + " ₺";
+                card.querySelector('.total').innerText = Math.floor(inst * T).toLocaleString() + " ₺";
+            });
         }
-        window.onload = run;
+        window.onload = updateAll;
     </script>
 </body>
 </html>
