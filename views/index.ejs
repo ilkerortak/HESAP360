@@ -1,17 +1,18 @@
 <div class="apple-card" style="text-align: center; max-width: 550px; margin: 40px auto; padding: 40px; border-radius: 30px; background: rgba(28, 28, 30, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
     
     <div style="background: rgba(0, 122, 255, 0.1); width: 68px; height: 68px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; border: 1px solid rgba(0, 122, 255, 0.2);">
-    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7 6V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V6" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M19 6H5C3.89543 6 3 6.89543 3 8V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V8C21 6.89543 20.1046 6 19 6Z" stroke="#007AFF" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M10 13H14M12 11V15" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 6V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V6" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19 6H5C3.89543 6 3 6.89543 3 8V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V8C21 6.89543 20.1046 6 19 6Z" stroke="#007AFF" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M10 13H14M12 11V15" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
     </div>
 
     <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; color: #fff; letter-spacing: -1px;">Nöbetçi Eczane Bul</h1>
     <p style="opacity: 0.6; margin-bottom: 35px; color: #fff; font-size: 1.1rem;">Türkiye geneli 81 ilde güncel nöbetçi eczane listeleri.</p>
 
     <div style="display: flex; flex-direction: column; gap: 18px; text-align: left;">
+        
         <div style="display: flex; flex-direction: column; gap: 8px;">
             <label style="font-size: 0.75rem; font-weight: 700; color: #007AFF; margin-left: 5px; text-transform: uppercase; letter-spacing: 1px;">Şehir Seçin</label>
             <select id="il-secim" onchange="ilceGuncelle()" style="padding: 18px; border-radius: 18px; border: 1px solid #444; background: #2c2c2e; color: #fff; font-size: 1rem; cursor: pointer; outline: none; transition: 0.3s; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23888%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 18px;">
@@ -33,10 +34,51 @@
     </div>
 </div>
 
+<div style="max-width: 900px; margin: 60px auto; padding: 0 20px;">
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 50px;">
+        <div style="background: rgba(255,255,255,0.03); padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05);">
+            <h3 style="color: #007AFF; margin-bottom: 15px; font-weight: 700;">Hızlı ve Güncel Bilgi</h3>
+            <p style="color: #888; font-size: 0.95rem; line-height: 1.7;">Eczane360, Türkiye'nin 81 ilinde plaka koduna göre sıralanmış kolay arayüzü ile nöbetçi eczanelere en hızlı şekilde ulaşmanız için tasarlandı. Akıllı veri depolama sistemimiz sayesinde güncel eczane listelerine beklemeden erişirsiniz.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05);">
+            <h3 style="color: #007AFF; margin-bottom: 15px; font-weight: 700;">Kesintisiz Sağlık Erişimi</h3>
+            <p style="color: #888; font-size: 0.95rem; line-height: 1.7;">Resmi tatiller, hafta sonları ve gece saatlerinde size en yakın eczaneyi bulmak artık saniyeler sürüyor. Sakarya'dan Antalya'ya, İstanbul'dan Ankara'ya tüm Türkiye'de sağlık rehberiniz olmaya devam ediyoruz.</p>
+        </div>
+    </div>
+
+    <div style="background: rgba(255,255,255,0.02); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.03); color: #777; font-size: 0.95rem; line-height: 1.8;">
+        <h2 style="color: #fff; font-size: 1.5rem; margin-bottom: 20px; font-weight: 700;">Türkiye'nin Dijital Nöbetçi Eczane Rehberi: Eczane360</h2>
+        
+        <p style="margin-bottom: 20px;">
+            Günümüzde sağlık hizmetlerine hızlı erişim her zamankinden daha önemli bir hale gelmiştir. <strong>Eczane360</strong>, tam da bu ihtiyacı karşılamak için geliştirilmiş, Türkiye'nin en kapsamlı ve en hızlı nöbetçi eczane sorgulama platformudur. İstanbul, Ankara, İzmir gibi büyükşehirlerin yanı sıra Türkiye'nin tüm illerinde ve ilçelerinde hizmet veren platformumuz, kullanıcı dostu arayüzü ile gece saatlerinde veya tatil günlerinde yaşanan "en yakın eczane nerede?" sorusuna anlık cevaplar sunar.
+        </p>
+
+        <p style="margin-bottom: 20px;">
+            Sistemimiz, resmi verileri anlık olarak işleyen modern API entegrasyonları ile çalışmaktadır. Diğer platformların aksine, <strong>Smart Cache</strong> teknolojisini kullanarak sayfaların saniyeler içinde yüklenmesini sağlarız. Bu sayede acil durumlarda internet hızınız düşük olsa bile aradığınız eczanenin adresine ve telefon bilgilerine hemen ulaşabilirsiniz. Eczane360 üzerinden sadece eczane isimlerini değil, aynı zamanda telefon numaralarını tek tıkla arama özelliğini ve detaylı açık adres bilgilerini de görebilirsiniz.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 15px; font-weight: 600;">Neden Eczane360 Kullanmalısınız?</h3>
+        <p style="margin-bottom: 20px;">
+            Platformumuzun sunduğu en büyük avantajlardan biri, 81 ilin plaka kodlarına göre optimize edilmiş yapısıdır. Sakarya nöbetçi eczaneleri aramasından, Adana nöbetçi eczaneleri listesine kadar her şey kategorize edilmiş durumdadır. Ayrıca, tamamen ücretsiz olan servisimiz, veri gizliliğine ve KVKK kurallarına tam uyumluluk göstermektedir. Kullanıcı deneyimini ön planda tutan karanlık mod (dark mode) tasarımımız, gece saatlerinde göz yormadan bilgiye ulaşmanızı sağlar. Google AdSense reklam standartlarına uygun içeriğimizle, size temiz ve güvenilir bir hizmet sunmayı taahhüt ediyoruz.
+        </p>
+
+        <p>
+            Gelecekte harita üzerinden yol tarifi alma ve eczanelerin yoğunluk durumlarını gösterme gibi yeni özelliklerle sağlık teknolojileri alanında öncü olmaya devam edeceğiz. Eczane360 ekibi olarak, toplum sağlığına katkı sağlamaktan gurur duyuyoruz. Unutmayın, acil sağlık durumlarında her zaman en yakın sağlık kuruluşuna başvurmanızı öneririz.
+        </p>
+    </div>
+
+    <div style="margin-top: 40px; text-align: center; color: #444; font-size: 0.8rem;">
+        <p>© 2026 Eczane360 | Tüm Veriler Resmi Kaynaklardan Derlenmektedir. Sistem üzerinde sunulan bilgiler bilgilendirme amaçlıdır.</p>
+    </div>
+</div>
+
 <script>
+    // İlçe çekme fonksiyonu - Plaka koduna göre kesin arama yapar
     async function ilceGuncelle() {
         const ilSelect = document.getElementById('il-secim');
-        const plaka = ilSelect.options[ilSelect.selectedIndex].getAttribute('data-plaka');
+        const selectedOption = ilSelect.options[ilSelect.selectedIndex];
+        const plaka = selectedOption.getAttribute('data-plaka');
         const ilceSelect = document.getElementById('ilce-secim');
         
         if (!plaka) {
@@ -47,7 +89,6 @@
         ilceSelect.innerHTML = '<option value="">Yükleniyor...</option>';
 
         try {
-            // Plaka kodu ile daha kesin arama yapıyoruz
             const response = await fetch(`https://turkiyeapi.dev/api/v1/provinces/${plaka}`);
             const data = await response.json();
             
@@ -57,7 +98,7 @@
                 
                 ilceler.sort((a, b) => a.name.localeCompare(b.name, 'tr')).forEach(item => {
                     const opt = document.createElement('option');
-                    // API parametre uyumu için Türkçe karakterleri normalize ediyoruz
+                    // API parametre uyumu için Türkçe karakter normalizasyonu
                     const normalizeVal = item.name.replace(/İ/g, 'I').replace(/ı/g, 'i')
                                                  .replace(/Ş/g, 'S').replace(/ş/g, 's')
                                                  .replace(/Ğ/g, 'G').replace(/ğ/g, 'g')
@@ -73,11 +114,12 @@
                 ilceSelect.innerHTML = '<option value="">İlçe bulunamadı</option>';
             }
         } catch (error) {
-            console.error("İlçe hatası:", error);
+            console.error("İlçe çekme hatası:", error);
             ilceSelect.innerHTML = '<option value="">Hata oluştu</option>';
         }
     }
 
+    // Yönlendirme fonksiyonu
     function gitEczaneye() {
         const il = document.getElementById('il-secim').value;
         const ilce = document.getElementById('ilce-secim').value;
