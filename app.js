@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const app = express();
 
-// --- AYARLAR ---
+// --- KONFİGÜRASYON ---
 const NOSY_TOKEN = 'CSsas9Y81PH7hgA3I1n6n3AHgKSQW32fmndxsNWSqzaHARVAorMP5rJyJ5oK'; 
 const BASE_URL = 'https://www.nosyapi.com/apiv2/service/pharmacies-on-duty';
 
@@ -22,7 +22,8 @@ const normalizeText = (str) => {
     if (!str) return "";
     return str.toString().toLowerCase()
         .replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g')
-        .replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c').trim();
+        .replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c')
+        .trim();
 };
 
 async function getEczaneler(sehir, ilce = "") {
@@ -33,7 +34,7 @@ async function getEczaneler(sehir, ilce = "") {
     if (fs.existsSync(dosyaYolu)) return JSON.parse(fs.readFileSync(dosyaYolu, 'utf8'));
 
     try {
-        // Postman dokümanına göre tam URL yapısı
+        // Görüntüdeki URL yapısı: ?district=akyurt (NosyAPI bazen city yerine sadece district ister)
         let url = `${BASE_URL}?city=${encodeURIComponent(sehir.toLowerCase())}`;
         if (ilce) url += `&district=${encodeURIComponent(ilce.toLowerCase())}`;
 
@@ -41,9 +42,7 @@ async function getEczaneler(sehir, ilce = "") {
             headers: { 'Authorization': `Bearer ${NOSY_TOKEN}` }
         });
 
-        // Veri yapısını kontrol et: data.data veya direkt data
-        const result = response.data.data || response.data || [];
-        
+        const result = response.data.data || [];
         if (result.length > 0) {
             fs.writeFileSync(dosyaYolu, JSON.stringify(result));
             return result;
@@ -62,25 +61,13 @@ app.get('/eczaneler/:il/:ilce?', async (req, res) => {
     try {
         const hamVeriler = await getEczaneler(il, ilceReq);
         
-        if (hamVeriler.length === 0) {
-            return res.render('liste', { il: il.toUpperCase(), eczaneler: [], title: 'Bulunamadı' });
-        }
-
-        const formatli = hamVeriler.map(e => {
-            // NOSYAPI'NİN TÜM GİZLİ ANAHTARLARINI DENİYORUZ
-            // Postman ve dökümanlardaki tüm varyasyonlar:
-            const ad = e.EczaneAd || e.name || e.EczaneAdi || e.Ad || e.title || "İSİM ALINAMADI";
-            const adres = e.Adresi || e.address || e.Adres || e.Address || "Adres bilgisi yok";
-            const tel = (e.Telefon || e.phone || e.phoneLine || "").toString().replace(/\D/g, '');
-            const eczaneIlce = e.ilce || e.district || e.dist || il;
-
-            return {
-                ad: ad.toUpperCase(),
-                adres: adres,
-                tel: tel,
-                ilce: eczaneIlce.toUpperCase()
-            };
-        });
+        const formatli = hamVeriler.map(e => ({
+            // PANELDEKİ TAM KARŞILIKLAR BURADA:
+            ad: (e.EczaneAd || e.name || e.EczaneAdi || "Bilinmiyor").toUpperCase(),
+            adres: e.Adresi || e.address || e.Adres || "Adres Bulunamadı",
+            tel: (e.Telefon || e.phone || "").toString().replace(/\D/g, ''),
+            ilce: (e.ilce || e.district || il).toUpperCase()
+        }));
 
         res.render('liste', { 
             il: il.toUpperCase(), 
@@ -93,12 +80,13 @@ app.get('/eczaneler/:il/:ilce?', async (req, res) => {
     }
 });
 
+// Cache temizleme (Önemli: Önceki isimsiz kayıtları siler)
 app.get('/temizle', (req, res) => {
     if (fs.existsSync(dataFolder)) {
         fs.rmSync(dataFolder, { recursive: true, force: true });
         fs.mkdirSync(dataFolder);
     }
-    res.send("✅ Sistem Sıfırlandı. Lütfen şimdi testi yapın.");
+    res.send("✅ Panel verilerine göre sistem sıfırlandı. Şimdi testi yapabilirsin.");
 });
 
 // Sayfalar
