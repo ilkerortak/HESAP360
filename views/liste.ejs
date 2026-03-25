@@ -1,0 +1,15 @@
+<div style="margin-bottom: 30px;">
+    <a href="/" style="text-decoration: none; color: var(--blue); font-weight: 600;">← Geri Dön</a>
+    <h1 style="margin-top: 10px;"><%= il %> Nöbetçi Eczaneler</h1>
+</div>
+
+<% eczaneler.forEach(e => { %>
+    <div class="apple-card" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h2 style="margin: 0; color: var(--blue);"><%= e.ad %></h2>
+            <p style="opacity: 0.7; margin: 5px 0;"><%= e.adres %></p>
+            <a href="<%= e.konum %>" target="_blank" style="color: var(--text); font-size: 0.9rem;">📍 Haritada Gör</a>
+        </div>
+        <a href="tel:<%= e.tel %>" class="btn-call"><i class="fa-solid fa-phone"></i> Ara</a>
+    </div>
+<% }) %>
