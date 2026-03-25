@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eczane360 | Nöbetçi Eczaneler</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root { --bg: #F5F5F7; --card: #FFFFFF; --text: #1D1D1F; --blue: #FF3B30; --border: #D2D2D7; }
+        [data-theme="dark"] { --bg: #000000; --card: #1C1C1E; --text: #F5F5F7; --blue: #FF453A; --border: #38383A; }
+
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, sans-serif; margin: 0; transition: 0.3s; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 8%; background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.5rem; font-weight: 900; text-decoration: none; color: var(--text); }
+        .logo span { color: var(--blue); }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        .apple-card { background: var(--card); border-radius: 24px; padding: 25px; border: 1px solid var(--border); box-shadow: 0 8px 30px rgba(0,0,0,0.04); margin-bottom: 20px; }
+        .btn-call { background: #34C759; color: white; padding: 12px 25px; border-radius: 40px; text-decoration: none; font-weight: 700; display: inline-block; }
+        .mode-btn { background: var(--border); border: none; padding: 10px 15px; border-radius: 20px; color: var(--text); cursor: pointer; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">ECZANE<span>360</span></a>
+        <button class="mode-btn" onclick="toggleMode()">🌓 Değiştir</button>
+    </nav>
+    <div class="container"><%- body %></div>
+    <script>
+        function toggleMode() {
+            const html = document.documentElement;
+            const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+    </script>
+</body>
+</html>
