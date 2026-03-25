@@ -3,56 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hesap360 | Finansal Karar Destek Merkezi</title>
+    <title>Hesap360 | Finansal Analiz Merkezi</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        :root { --blue: #0066ff; --text: #1a1a1a; --gray: #f5f7fa; --border: #eef1f6; }
+        :root { --blue: #0066ff; --text: #1a1a1a; --gray: #f8fafc; --border: #edf2f7; }
         body { background: #fff; color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; }
-        .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
-        
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         nav { display: flex; justify-content: space-between; align-items: center; padding: 25px 0; border-bottom: 1px solid var(--border); }
-        .logo { font-size: 1.4rem; font-weight: 800; text-decoration: none; color: var(--text); }
+        .logo { font-size: 1.5rem; font-weight: 800; text-decoration: none; color: #000; letter-spacing: -1px; }
         .logo span { color: var(--blue); }
-
-        .hero { text-align: center; padding: 80px 0; }
-        .hero h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; margin: 0; color: #000; }
-        .hero p { color: #666; font-size: 1.2rem; margin: 20px 0 40px; }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-        .card { 
-            background: #fff; border: 1px solid var(--border); padding: 40px 30px; border-radius: 24px; 
-            text-decoration: none; color: inherit; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-        }
-        .card:hover { transform: translateY(-5px); border-color: var(--blue); box-shadow: 0 20px 40px rgba(0,102,255,0.08); }
-        .card i { font-size: 2.2rem; color: var(--blue); margin-bottom: 25px; display: block; }
-        .card h3 { font-size: 1.25rem; margin: 0 0 10px 0; font-weight: 700; }
-        .card p { color: #777; font-size: 0.95rem; line-height: 1.5; margin: 0; }
-
-        footer { margin-top: 100px; padding: 40px 0; background: var(--gray); text-align: center; font-size: 0.9rem; }
-        .f-links a { color: #666; text-decoration: none; margin: 0 15px; font-weight: 600; }
+        .hero { text-align: center; padding: 100px 0 60px; }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; margin: 0; }
+        .hero p { color: #64748b; font-size: 1.25rem; margin-top: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-top: 50px; }
+        .card { background: #fff; border: 1px solid var(--border); padding: 40px 30px; border-radius: 24px; text-decoration: none; color: inherit; transition: 0.3s ease; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+        .card:hover { border-color: var(--blue); transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,102,255,0.1); }
+        .card i { font-size: 2rem; color: var(--blue); margin-bottom: 20px; display: block; }
+        .card h3 { margin: 0 0 10px 0; font-size: 1.3rem; }
+        footer { margin-top: 80px; padding: 40px 0; border-top: 1px solid var(--border); text-align: center; font-size: 0.9rem; color: #94a3b8; }
+        .f-links { margin-bottom: 15px; }
+        .f-links a { color: #64748b; text-decoration: none; margin: 0 10px; font-weight: 600; }
     </style>
 </head>
 <body>
     <div class="container">
         <nav><a href="/" class="logo">HESAP<span>360</span></a></nav>
-        <div class="hero">
+        <section class="hero">
             <h1>Doğru Hesap. Net Karar.</h1>
-            <p>Finansal geleceğinizi profesyonel araçlarla planlayın.</p>
-        </div>
+            <p>Tüm bankaların faiz oranlarını saniyeler içinde karşılaştırın.</p>
+        </section>
         <div class="grid">
-            <a href="/kredi" class="card"><i class="fa-solid fa-coins"></i><h3>Kredi</h3><p>En uygun faizli kredi tekliflerini karşılaştırın.</p></a>
-            <a href="/mevduat" class="card"><i class="fa-solid fa-arrow-up-right-dots"></i><h3>Mevduat</h3><p>Birikimleriniz için en yüksek getiriyi bulun.</p></a>
-            <a href="/kredi-karti" class="card"><i class="fa-solid fa-credit-card"></i><h3>Kartlar</h3><p>Kredi kartı aidat ve puanlarını inceleyin.</p></a>
-            <a href="/kredi-limit" class="card"><i class="fa-solid fa-gauge-high"></i><h3>Limit</h3><p>Çekebileceğiniz kredi miktarını hesaplayın.</p></a>
+            <a href="/kredi" class="card"><i class="fa-solid fa-coins"></i><h3>Kredi</h3><p>İhtiyaç ve konut kredisi.</p></a>
+            <a href="/mevduat" class="card"><i class="fa-solid fa-chart-line"></i><h3>Mevduat</h3><p>Yüksek faiz getirisi.</p></a>
+            <a href="/kredi-karti" class="card"><i class="fa-solid fa-credit-card"></i><h3>Kartlar</h3><p>Puan ve aidat analizi.</p></a>
+            <a href="/kredi-limit" class="card"><i class="fa-solid fa-gauge-high"></i><h3>Limit</h3><p>Maksimum kredi sınırı.</p></a>
         </div>
         <footer>
             <div class="f-links">
-                <a href="/bilgi/hakkimizda">Hakkımızda</a>
-                <a href="/bilgi/kvkk">KVKK</a>
+                <a href="/bilgi/hakkimizda">Kurumsal</a>
+                <a href="/bilgi/kvkk">Gizlilik</a>
                 <a href="/bilgi/iletisim">İletişim</a>
             </div>
-            <p style="margin-top:20px;">© 2026 Hesap360. Tüm hakları saklıdır.</p>
+            <p>© 2026 Hesap360. Tüm hakları saklıdır.</p>
         </footer>
     </div>
 </body>
