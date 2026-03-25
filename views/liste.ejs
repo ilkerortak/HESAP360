@@ -2,6 +2,17 @@
     <a href="/" style="text-decoration: none; color: var(--blue); font-weight: 600;">← Geri Dön</a>
     <h1 style="margin-top: 10px; font-weight: 800;"><%= il %> Nöbetçi Eczaneler</h1>
 </div>
+<div class="results-grid">
+    <% if (eczaneler && eczaneler.length > 0) { %>
+        <% eczaneler.forEach(e => { %>
+            <% }) %>
+    <% } else { %>
+        <div class="apple-card" style="grid-column: 1/-1; text-align: center; padding: 40px;">
+            <p style="opacity: 0.6;">Üzgünüz, şu an bu bölge için nöbetçi eczane verisi alınamadı.</p>
+            <a href="/" style="color: var(--blue); font-weight: bold;">Farklı bir ilçe deneyin</a>
+        </div>
+    <% } %>
+</div>
 
 <div class="results-grid">
     <% eczaneler.forEach(e => { %>
