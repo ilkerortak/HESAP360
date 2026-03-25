@@ -7,53 +7,63 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
-app.set('layout', 'layout'); // Layout dosyasını kullanması için
+app.set('layout', 'layout'); 
 app.use(express.static(path.join(__dirname, 'public')));
 
 // SAKARYA VERİSİNİ ANLIK ÇEKEN FONKSİYON
 async function getSakaryaEczaneler() {
     try {
-        // Sakarya Büyükşehir Rehber Linki
+        // En güncel veri linki
         const url = 'https://www.sakarya.bel.tr/tr/EBelediye/NobetciEczaneler';
         
-        // Belediye sitesi bot sanmasın diye tarayıcı kimliği gönderiyoruz
+        // Bot engeline takılmamak için gelişmiş header
         const { data } = await axios.get(url, {
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-            }
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                'Cache-Control': 'no-cache'
+            },
+            timeout: 8000
         });
 
         const $ = cheerio.load(data);
         const list = [];
 
-        // Belediye sitesindeki tablo satırlarını (tr) hedefliyoruz
-        $('.table tbody tr').each((i, el) => {
+        // Sakarya Belediye sitesindeki tabloyu (hem .table hem table) tarıyoruz
+        $('table tr, .table tr, .table-responsive tr').each((i, el) => {
             const cells = $(el).find('td');
             
-            // Eğer hücreler varsa veriyi çek
             if (cells.length >= 3) {
-                const ad = $(cells[0]).text().trim();
-                const adres = $(cells[1]).text().trim();
-                const tel = $(cells[2]).text().trim().replace(/ /g, ''); // Boşlukları temizle (tel için)
-                const ilce = $(cells[3]).text().trim() || 'Sakarya';
+                const adRaw = $(cells[0]).text().trim();
+                const adresRaw = $(cells[1]).text().trim();
+                const telRaw = $(cells[2]).text().trim().replace(/\D/g, ''); // Sadece rakamları al
+                const ilceRaw = $(cells[3]).text().trim() || 'Sakarya';
 
-                if (ad && ad !== "Eczane Adı") { // Başlık satırı değilse ekle
-                    list.push({ ad, adres, tel, ilce });
+                // Başlıkları ve boş satırları ele
+                if (adRaw && adRaw.length > 3 && !adRaw.includes("Eczane Adı")) {
+                    list.push({
+                        ad: adRaw.toUpperCase(),
+                        adres: adresRaw,
+                        // Telefonun başına 0 ekle (yoksa)
+                        tel: telRaw.startsWith('0') ? telRaw : '0' + telRaw,
+                        ilce: ilceRaw
+                    });
                 }
             }
         });
 
-        // Eğer site yapısı değişirse boş dönmemesi için Fallback (Yedek) verisi
+        // EĞER LİSTE BOŞSA (Fallback - Yedek)
         if (list.length === 0) {
+            console.log("Canlı veri boş döndü, yedekler yükleniyor...");
             return [
-                { ad: "İzlem Eczanesi", adres: "Güllük Mah. Sağlık Cad. No:5/1G", tel: "02645031323", ilce: "Adapazarı" },
-                { ad: "Karakaya Eczanesi", adres: "Semerciler Mh. Yamanlar sk. no:32/E", tel: "02642720660", ilce: "Adapazarı" }
+                { ad: "İzlem Eczanesi (Sistem Bakımda)", adres: "Güllük Mah. Sağlık Cad. No:5/1G", tel: "02645031323", ilce: "Adapazarı" },
+                { ad: "Karakaya Eczanesi (Sistem Bakımda)", adres: "Semerciler Mh. Yamanlar sk. no:32/E", tel: "02642720660", ilce: "Adapazarı" }
             ];
         }
 
         return list;
     } catch (error) {
-        console.error("Sakarya verisi çekilemedi:", error.message);
+        console.error("Hata:", error.message);
         return [];
     }
 }
@@ -74,4 +84,4 @@ app.get('/ads.txt', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Sakarya Sistemi v2.0 Aktif - Port: ${PORT}`));
+app.listen(PORT, () => console.log(`Sakarya Sistemi v2.1 Aktif - Port: ${PORT}`));
