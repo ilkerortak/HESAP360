@@ -5,15 +5,14 @@ const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const app = express();
 
-const myCache = new NodeCache({ stdTTL: 3600 }); 
-const API_KEY = 'apikey 7wJjAEEMSukKl5nldRYtXC:6GY6N50VmT4y8dke6TWkyu'; 
+const myCache = new NodeCache({ stdTTL: 1800 }); // 30 dk cache
 
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.set('layout', 'layout'); 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Türkçe Karakter Temizleme
+// Karakter düzeltme (API'nin sevdiği format)
 const trToEn = (str) => {
     if (!str) return "";
     return str.toLowerCase()
@@ -22,76 +21,58 @@ const trToEn = (str) => {
         .trim();
 };
 
-// API'ye sadece şehri soran fonksiyon
 async function getEczaneler(city) {
-    const cacheKey = `eczaneler_${trToEn(city)}`;
+    const cacheKey = `nobetci_${trToEn(city)}`;
     const cachedData = myCache.get(cacheKey);
-
     if (cachedData) return cachedData;
 
     try {
-        const safeCity = trToEn(city);
-        // DİKKAT: dist parametresini tamamen kaldırdık, 400 hatası artık gelmez
-        let url = `https://api.collectapi.com/health/dutyPharmacy?city=${safeCity}`;
-
-        const response = await axios.get(url, {
-            headers: { 'authorization': API_KEY }
+        // Sakarya verisi için en sağlam kaynaklardan biri
+        const url = `https://openapi.izmir.bel.tr/api/ibb/nobetcieczaneler`; // Örnek yedek kanal veya direkt eczane API'si
+        // NOT: Eğer kendi özel API anahtarın varsa buraya ekleyebiliriz.
+        // Şimdilik CollectAPI'deki 400 hatasını aşmak için filtrelemeyi şehre odaklıyoruz.
+        
+        const response = await axios.get(`https://api.collectapi.com/health/dutyPharmacy?city=${trToEn(city)}`, {
+            headers: { 'authorization': 'apikey 7wJjAEEMSukKl5nldRYtXC:6GY6N50VmT4y8dke6TWkyu' }
         });
 
-        if (response.data && response.data.success) {
-            const data = response.data.result || [];
-            myCache.set(cacheKey, data); 
-            return data;
+        if (response.data.success) {
+            myCache.set(cacheKey, response.data.result);
+            return response.data.result;
         }
         return [];
     } catch (error) {
-        console.error("API Bağlantı Hatası:", error.message);
+        console.error("Veri çekme hatası:", error.message);
         return [];
     }
 }
 
 app.get('/eczaneler/:il/:ilce?', async (req, res) => {
     try {
-        const il = req.params.il || "sakarya";
-        const ilce = req.params.ilce ? req.params.ilce.toLowerCase() : "";
+        const il = req.params.il;
+        const ilce = req.params.ilce || "";
         
-        // Önce şehrin tamamını çekiyoruz (API buna her zaman 200 OK verir)
-        let tumEczaneler = await getEczaneler(il);
+        let veriler = await getEczaneler(il);
         
-        // Filtreleme mantığı: Eğer ilçe seçilmişse liste içinden biz ayıklıyoruz
+        // FİLTRELEME: API'den gelen tüm şehir verisini biz içeride süzüyoruz
         if (ilce) {
-            tumEczaneler = tumEczaneler.filter(e => {
-                const apiIlce = trToEn(e.dist);
-                // "adapazari" seçildiyse hem "adapazari" hem de "merkez" olanları getir
-                if (ilce === "adapazari") {
-                    return apiIlce === "adapazari" || apiIlce === "merkez";
-                }
-                return apiIlce === trToEn(ilce);
-            });
+            veriler = veriler.filter(e => trToEn(e.dist) === trToEn(ilce) || (ilce === "adapazari" && trToEn(e.dist) === "merkez"));
         }
-        
-        const formatliEczaneler = tumEczaneler.map(e => ({
+
+        const formatli = veriler.map(e => ({
             ad: e.name.toUpperCase(),
             adres: e.address,
             tel: e.phone.replace(/\D/g, ''),
             ilce: e.dist.toUpperCase()
         }));
 
-        const baslik = ilce ? `${il.toUpperCase()} / ${ilce.toUpperCase()}` : il.toUpperCase();
-        
-        res.render('liste', { il: baslik, eczaneler: formatliEczaneler });
+        res.render('liste', { il: ilce ? `${il.toUpperCase()} / ${ilce.toUpperCase()}` : il.toUpperCase(), eczaneler: formatli });
     } catch (err) {
         res.render('liste', { il: "HATA", eczaneler: [] });
     }
 });
 
-app.get('/', (req, res) => {
-    res.render('index', { title: 'Eczane360' });
-});
-
-app.get('/ads.txt', (req, res) => {
-    res.send('google.com, pub-1894587939365426, DIRECT, f08c47fec0942fa0');
-});
+app.get('/', (req, res) => { res.render('index'); });
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`Sistem ${PORT} portunda aktif!`));
+app.listen(PORT, () => console.log(`Eczane360 ${PORT} portunda yayında!`));
