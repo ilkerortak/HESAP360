@@ -113,6 +113,9 @@ app.get('/ads.txt', (req, res) => {
 });
 
 const PORT = process.env.PORT || 8080;
+app.get('/hakkimizda', (req, res) => { res.render('hakkimizda', { title: 'Hakkımızda' }); });
+app.get('/kvkk', (req, res) => { res.render('kvkk', { title: 'KVKK' }); });
+app.get('/iletisim', (req, res) => { res.render('iletisim', { title: 'İletişim' }); });
 app.listen(PORT, () => {
     console.log(`-------------------------------------------`);
     console.log(`Eczane360 SİSTEMİ PORT ${PORT} ÜZERİNDE AKTİF`);
