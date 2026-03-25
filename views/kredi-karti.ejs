@@ -2,67 +2,57 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Kredi Kartı Analizi | Hesap360</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>Kredi Kartları | Hesap360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        :root { --bg: #020617; --surface: #0f172a; --primary: #3b82f6; --border: rgba(255, 255, 255, 0.08); --text-dim: #94a3b8; }
-        body { background: var(--bg); font-family: 'Plus Jakarta Sans', sans-serif; color: #fff; margin: 0; }
-        .container { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
-        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 28px; padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .input-group { margin-bottom: 25px; }
-        label { display: block; margin-bottom: 10px; color: var(--text-dim); font-size: 0.85rem; font-weight: 700; }
-        input { width: 100%; background: #020617; border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; font-size: 1.1rem; box-sizing: border-box; }
-        .btn { background: var(--primary); color: #fff; border: none; padding: 18px; border-radius: 12px; width: 100%; font-weight: 800; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
-        .results { margin-top: 40px; display: none; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .res-item { background: rgba(59, 130, 246, 0.05); border: 1px solid var(--border); padding: 25px; border-radius: 20px; text-align: center; }
-        .res-item h2 { color: var(--primary); margin: 10px 0 0 0; }
+        :root { --main: #6366f1; --bg: #0f172a; --glass: rgba(30, 41, 59, 0.7); --border: rgba(255, 255, 255, 0.1); }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .card-row { 
+            background: var(--glass); backdrop-filter: blur(10px); border: 1px solid var(--border); 
+            border-radius: 24px; padding: 25px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .card-info { display: flex; align-items: center; gap: 20px; }
+        .card-img { width: 100px; height: 60px; background: linear-gradient(45deg, #334155, #0f172a); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #94a3b8; border: 1px solid var(--border); }
+        .tag { background: rgba(99, 102, 241, 0.1); color: var(--main); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+        .btn-detail { background: var(--main); color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="/" style="color:var(--primary); text-decoration:none; font-weight:700; display:inline-block; margin-bottom:20px;">← Ana Sayfaya Dön</a>
-        <div class="card">
-            <h2 style="margin-top:0;">Kredi Kartı Borç Hesaplama</h2>
-            <p style="color:var(--text-dim); font-size:0.9rem; margin-bottom:30px;">Güncel asgari ödeme oranları ve gecikme faizine göre analiz edin.</p>
-            
-            <div class="input-group">
-                <label>TOPLAM EKSTRE BORCU (₺)</label>
-                <input type="number" id="debt" placeholder="Örn: 25000">
-            </div>
+        <a href="/" style="color:#94a3b8; text-decoration:none;">← Geri Dön</a>
+        <h1 style="margin: 20px 0 40px; font-weight: 800; letter-spacing: -1px;">Popüler Kredi Kartları</h1>
 
-            <button class="btn" onclick="analyzeCard()">BORCU ANALİZ ET</button>
-
-            <div class="results" id="resBox">
-                <div class="res-item">
-                    <small style="color:var(--text-dim)">ASGARI ÖDEME</small>
-                    <h2 id="minPay">0 ₺</h2>
-                </div>
-                <div class="res-item">
-                    <small style="color:var(--text-dim)">KALAN BORÇ</small>
-                    <h2 id="remain">0 ₺</h2>
-                </div>
-                <div class="res-item" style="grid-column: span 2; text-align: left;">
-                    <p style="font-size: 0.8rem; color: var(--text-dim); margin: 0;">
-                        * 25.000 TL ve altı limitli kartlarda asgari oran %20, üstünde %40 olarak hesaplanmıştır.
-                    </p>
+        <div class="card-row">
+            <div class="card-info">
+                <div class="card-img"><i class="fa-solid fa-credit-card fa-2x"></i></div>
+                <div>
+                    <span class="tag">BOL PUAN</span>
+                    <h3 style="margin: 5px 0;">Enpara Kredi Kartı</h3>
+                    <small style="color:#94a3b8;">Aidat Ömür Boyu Yok</small>
                 </div>
             </div>
+            <div style="text-align: center;">
+                <small style="color:#94a3b8;">Nakit Avans</small><br><b>%4.42</b>
+            </div>
+            <a href="#" class="btn-detail">Hemen Başvur</a>
+        </div>
+
+        <div class="card-row">
+            <div class="card-info">
+                <div class="card-img" style="background: linear-gradient(45deg, #ef4444, #991b1b);">AXESS</div>
+                <div>
+                    <span class="tag">chip-para</span>
+                    <h3 style="margin: 5px 0;">Akbank Axess</h3>
+                    <small style="color:#94a3b8;">2000 TL'ye varan chip-para</small>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <small style="color:#94a3b8;">Nakit Avans</small><br><b>%4.42</b>
+            </div>
+            <a href="#" class="btn-detail">Hemen Başvur</a>
         </div>
     </div>
-
-    <script>
-        function analyzeCard() {
-            const debt = parseFloat(document.getElementById('debt').value);
-            if(!debt) return alert("Lütfen borç tutarını girin.");
-
-            const rate = debt > 25000 ? 0.4 : 0.2;
-            const min = debt * rate;
-            
-            document.getElementById('minPay').innerText = Math.floor(min).toLocaleString() + " ₺";
-            document.getElementById('remain').innerText = Math.floor(debt - min).toLocaleString() + " ₺";
-            document.getElementById('resBox').style.display = 'grid';
-        }
-    </script>
 </body>
 </html>
