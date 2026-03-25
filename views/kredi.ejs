@@ -2,7 +2,8 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="referrer" content="no-referrer"> <title>Kredi Karşılaştır | Hesap360</title>
+    <meta name="referrer" content="no-referrer">
+    <title>Kredi Karşılaştır | Hesap360</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #020617; --surface: #0f172a; --primary: #3b82f6; --border: rgba(255, 255, 255, 0.08); --text-dim: #94a3b8; }
@@ -31,42 +32,37 @@
     </div>
 
     <div id="results">
-        <% banks.forEach(bank => { %>
-        <div class="bank-row" data-rate="<%= bank.krediOran %>">
-            <div class="bank-logo"><img src="<%= bank.logo %>" alt="<%= bank.ad %>"></div>
-            <div><small style="color:var(--text-dim)">FAİZ</small><br><b style="color:#10b981;">%<%= bank.krediOran %></b></div>
-            <div><small style="color:var(--text-dim)">TAKSİT</small><br><b class="inst">0 ₺</b></div>
-            <div><small style="color:var(--text-dim)">TOPLAM</small><br><b class="total">0 ₺</b></div>
-            <a href="#" class="btn-apply">BAŞVUR</a>
-        </div>
-        <% }) %>
+        <% if (locals.banks) { %>
+            <% banks.forEach(bank => { %>
+            <div class="bank-row" data-rate="<%= bank.krediOran %>">
+                <div class="bank-logo"><img src="<%= bank.logo %>" alt="<%= bank.ad %>"></div>
+                <div><small style="color:var(--text-dim)">FAİZ</small><br><b style="color:#10b981;">%<%= bank.krediOran %></b></div>
+                <div><small style="color:var(--text-dim)">TAKSİT</small><br><b class="inst">0 ₺</b></div>
+                <div><small style="color:var(--text-dim)">TOPLAM</small><br><b class="total">0 ₺</b></div>
+                <a href="#" class="btn-apply">BAŞVUR</a>
+            </div>
+            <% }) %>
+        <% } %>
     </div>
 </div>
 
 <script>
     function calc() {
-        // NaN hatasını önlemek için varsayılan değer atamaları
         const amount = parseFloat(document.getElementById('amount').value) || 100000;
         const term = parseInt(document.getElementById('term').value) || 12;
-        
         document.getElementById('aTxt').innerText = amount.toLocaleString('tr-TR') + " ₺";
         document.getElementById('tTxt').innerText = term + " AY";
 
         document.querySelectorAll('.bank-row').forEach(row => {
             const rate = parseFloat(row.getAttribute('data-rate'));
-            
             if (!isNaN(rate)) {
                 const monthlyRate = rate / 100;
-                // Bankacı formülü: (Anapara * Faiz * (1+Faiz)^Vade) / ((1+Faiz)^Vade - 1)
                 const installment = (amount * monthlyRate * Math.pow(1 + monthlyRate, term)) / (Math.pow(1 + monthlyRate, term) - 1);
-                const total = installment * term;
-
                 row.querySelector('.inst').innerText = Math.floor(installment).toLocaleString('tr-TR') + " ₺";
-                row.querySelector('.total').innerText = Math.floor(total).toLocaleString('tr-TR') + " ₺";
+                row.querySelector('.total').innerText = Math.floor(installment * term).toLocaleString('tr-TR') + " ₺";
             }
         });
     }
-    // Sayfa açıldığında ilk hesaplamayı yap
     window.onload = calc;
 </script>
 </body>
