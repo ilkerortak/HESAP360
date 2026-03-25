@@ -3,55 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Kredi Kartları | Hesap360</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --main: #6366f1; --bg: #0f172a; --glass: rgba(30, 41, 59, 0.7); --border: rgba(255, 255, 255, 0.1); }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
-        .card-row { 
-            background: var(--glass); backdrop-filter: blur(10px); border: 1px solid var(--border); 
-            border-radius: 24px; padding: 25px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;
-        }
-        .card-info { display: flex; align-items: center; gap: 20px; }
-        .card-img { width: 100px; height: 60px; background: linear-gradient(45deg, #334155, #0f172a); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #94a3b8; border: 1px solid var(--border); }
-        .tag { background: rgba(99, 102, 241, 0.1); color: var(--main); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
-        .btn-detail { background: var(--main); color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; }
+        body { background: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .container { max-width: 800px; margin: 60px auto; padding: 0 20px; }
+        .card-item { background: #fff; padding: 30px; border-radius: 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #edf2f7; }
+        .badge { background: #e0f2fe; color: #0369a1; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .btn { background: #0066ff; color: #fff; text-decoration: none; padding: 12px 25px; border-radius: 12px; font-weight: 700; }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="/" style="color:#94a3b8; text-decoration:none;">← Geri Dön</a>
-        <h1 style="margin: 20px 0 40px; font-weight: 800; letter-spacing: -1px;">Popüler Kredi Kartları</h1>
-
-        <div class="card-row">
-            <div class="card-info">
-                <div class="card-img"><i class="fa-solid fa-credit-card fa-2x"></i></div>
-                <div>
-                    <span class="tag">BOL PUAN</span>
-                    <h3 style="margin: 5px 0;">Enpara Kredi Kartı</h3>
-                    <small style="color:#94a3b8;">Aidat Ömür Boyu Yok</small>
-                </div>
-            </div>
-            <div style="text-align: center;">
-                <small style="color:#94a3b8;">Nakit Avans</small><br><b>%4.42</b>
-            </div>
-            <a href="#" class="btn-detail">Hemen Başvur</a>
+        <h2>Kredi Kartlarını İncele</h2>
+        <div class="card-item">
+            <div><span class="badge">AİDATSIZ</span><h3>Enpara Kredi Kartı</h3><p>Ömür boyu aidat yok.</p></div>
+            <a href="#" class="btn">Başvur</a>
         </div>
-
-        <div class="card-row">
-            <div class="card-info">
-                <div class="card-img" style="background: linear-gradient(45deg, #ef4444, #991b1b);">AXESS</div>
-                <div>
-                    <span class="tag">chip-para</span>
-                    <h3 style="margin: 5px 0;">Akbank Axess</h3>
-                    <small style="color:#94a3b8;">2000 TL'ye varan chip-para</small>
-                </div>
-            </div>
-            <div style="text-align: center;">
-                <small style="color:#94a3b8;">Nakit Avans</small><br><b>%4.42</b>
-            </div>
-            <a href="#" class="btn-detail">Hemen Başvur</a>
+        <div class="card-item">
+            <div><span class="badge">BOL PUAN</span><h3>Akbank Axess</h3><p>2000 TL Chip-para hediye.</p></div>
+            <a href="#" class="btn">Başvur</a>
         </div>
     </div>
 </body>
