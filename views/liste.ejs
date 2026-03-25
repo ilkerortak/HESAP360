@@ -1,25 +1,39 @@
-<% eczaneler.forEach(e => { %>
-    <div class="apple-card">
-        <div class="card-content">
-            <h2 style="color: var(--blue); margin:0;"><%= e.ad %></h2>
-            <p style="opacity: 0.7; margin: 8px 0;"><%= e.adres %></p>
-            
-            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                <a href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(e.ad + ' ' + e.adres) %>" 
-                   target="_blank" 
-                   style="text-decoration:none; font-size: 0.9rem; color: var(--text); font-weight: 600;">
-                   📍 Haritada Odakla
-                </a>
-                
-                <span>|</span>
+<div style="margin-bottom: 30px;">
+    <a href="/" style="text-decoration: none; color: var(--blue); font-weight: 600;">← Geri Dön</a>
+    <h1 style="margin-top: 10px; font-weight: 800;"><%= il %> Nöbetçi Eczaneler</h1>
+</div>
 
+<div class="results-grid">
+    <% eczaneler.forEach(e => { %>
+        <div class="apple-card" style="display: flex; flex-direction: column; gap: 15px;">
+            <div>
+                <h2 style="margin: 0; color: var(--blue); font-size: 1.4rem; font-weight: 800;"><%= e.ad %></h2>
+                <p style="opacity: 0.7; margin: 8px 0; line-height: 1.4;"><%= e.adres %></p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                 <a href="https://www.google.com/maps/dir/?api=1&destination=<%= encodeURIComponent(e.ad + ' ' + e.adres) %>" 
                    target="_blank" 
-                   style="text-decoration:none; font-size: 0.9rem; color: var(--blue); font-weight: 600;">
-                   🚗 Yol Tarifi
+                   style="background: var(--bg); color: var(--text); padding: 12px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 700; border: 1px solid var(--border); font-size: 0.9rem;">
+                   <i class="fa-solid fa-location-arrow" style="margin-right: 5px;"></i> Yol Tarifi
+                </a>
+
+                <a href="tel:<%= e.tel %>" 
+                   style="background: #34C759; color: white; padding: 12px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 700; font-size: 0.9rem;">
+                   <i class="fa-solid fa-phone" style="margin-right: 5px;"></i> Eczaneyi Ara
                 </a>
             </div>
         </div>
-        <a href="tel:<%= e.tel %>" class="btn-call"><i class="fa-solid fa-phone"></i></a>
-    </div>
-<% }) %>
+    <% }) %>
+</div>
+
+<style>
+    .results-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    @media (min-width: 768px) {
+        .results-grid { grid-template-columns: 1fr 1fr; }
+    }
+</style>
