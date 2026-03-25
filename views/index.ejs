@@ -5,38 +5,50 @@
     </div>
 
     <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; color: #fff; letter-spacing: -1px;">Nöbetçi Eczane Bul</h1>
-    <p style="opacity: 0.6; margin-bottom: 35px; color: #fff; font-size: 1.1rem;">Türkiye geneli 81 il ve ilçe seçerek anlık listeye ulaşın.</p>
+    <p style="opacity: 0.6; margin-bottom: 35px; color: #fff; font-size: 1.1rem;">Türkiye geneli 81 ilde güncel nöbetçi eczane listeleri.</p>
 
-    <div style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
-        <label style="font-size: 0.8rem; font-weight: 600; color: #007AFF; margin-left: 5px; text-transform: uppercase;">Şehir Seçimi</label>
-        <select id="il-secim" onchange="ilceGuncelle()" style="padding: 18px; border-radius: 18px; border: 1px solid #444; background: #2c2c2e; color: #fff; font-size: 1rem; cursor: pointer; outline: none; transition: 0.3s; appearance: none;">
-            <option value="">İl Seçiniz</option>
-            <option value="Adana">Adana</option><option value="Adiyaman">Adıyaman</option><option value="Afyonkarahisar">Afyonkarahisar</option><option value="Agri">Ağrı</option><option value="Amasya">Amasya</option><option value="Ankara">Ankara</option><option value="Antalya">Antalya</option><option value="Artvin">Artvin</option><option value="Aydin">Aydın</option><option value="Balikesir">Balıkesir</option><option value="Bilecik">Bilecik</option><option value="Bingol">Bingöl</option><option value="Bitlis">Bitlis</option><option value="Bolu">Bolu</option><option value="Burdur">Burdur</option><option value="Bursa">Bursa</option><option value="Canakkale">Çanakkale</option><option value="Cankiri">Çankırı</option><option value="Corum">Çorum</option><option value="Denizli">Denizli</option><option value="Diyarbakir">Diyarbakır</option><option value="Edirne">Edirne</option><option value="Elazig">Elazığ</option><option value="Erzincan">Erzincan</option><option value="Erzurum">Erzurum</option><option value="Eskisehir">Eskişehir</option><option value="Gaziantep">Gaziantep</option><option value="Giresun">Giresun</option><option value="Gumushane">Gümüşhane</option><option value="Hakkari">Hakkari</option><option value="Hatay">Hatay</option><option value="Isparta">Isparta</option><option value="Mersin">Mersin</option><option value="Istanbul">İstanbul</option><option value="Izmir">İzmir</option><option value="Kars">Kars</option><option value="Kastamonu">Kastamonu</option><option value="Kayseri">Kayseri</option><option value="Kirklareli">Kırklareli</option><option value="Kirsehir">Kırşehir</option><option value="Kocaeli">Kocaeli</option><option value="Konya">Konya</option><option value="Kutahya">Kütahya</option><option value="Malatya">Malatya</option><option value="Manisa">Manisa</option><option value="Kahramanmaras">Kahramanmaraş</option><option value="Mardin">Mardin</option><option value="Mugla">Muğla</option><option value="Mus">Muş</option><option value="Nevsehir">Nevşehir</option><option value="Nigde">Niğde</option><option value="Ordu">Ordu</option><option value="Rize">Rize</option><option value="Sakarya">Sakarya</option><option value="Samsun">Samsun</option><option value="Siirt">Siirt</option><option value="Sinop">Sinop</option><option value="Sivas">Sivas</option><option value="Tekirdag">Tekirdağ</option><option value="Tokat">Tokat</option><option value="Trabzon">Trabzon</option><option value="Tunceli">Tunceli</option><option value="Sanliurfa">Şanlıurfa</option><option value="Usak">Uşak</option><option value="Van">Van</option><option value="Yozgat">Yozgat</option><option value="Zonguldak">Zonguldak</option><option value="Aksaray">Aksaray</option><option value="Bayburt">Bayburt</option><option value="Karaman">Karaman</option><option value="Kirikkale">Kırıkkale</option><option value="Batman">Batman</option><option value="Sirnak">Şırnak</option><option value="Bartin">Bartın</option><option value="Ardahan">Ardahan</option><option value="Igdir">Iğdır</option><option value="Yalova">Yalova</option><option value="Karabuk">Karabük</option><option value="Kilis">Kilis</option><option value="Osmaniye">Osmaniye</option><option value="Duzce">Düzce</option>
-        </select>
+    <div style="display: flex; flex-direction: column; gap: 18px; text-align: left;">
+        
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="font-size: 0.75rem; font-weight: 700; color: #007AFF; margin-left: 5px; text-transform: uppercase; letter-spacing: 1px;">Şehir Seçin</label>
+            <select id="il-secim" onchange="ilceGuncelle()" style="padding: 18px; border-radius: 18px; border: 1px solid #444; background: #2c2c2e; color: #fff; font-size: 1rem; cursor: pointer; outline: none; transition: 0.3s; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23888%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 18px;">
+                <option value="">İl Seçiniz</option>
+                <option value="Adana">01 - Adana</option> <option value="Adiyaman">02 - Adıyaman</option> <option value="Afyonkarahisar">03 - Afyonkarahisar</option> <option value="Agri">04 - Ağrı</option> <option value="Amasya">05 - Amasya</option> <option value="Ankara">06 - Ankara</option> <option value="Antalya">07 - Antalya</option> <option value="Artvin">08 - Artvin</option> <option value="Aydin">09 - Aydın</option> <option value="Balikesir">10 - Balıkesir</option> <option value="Bilecik">11 - Bilecik</option> <option value="Bingol">12 - Bingöl</option> <option value="Bitlis">13 - Bitlis</option> <option value="Bolu">14 - Bolu</option> <option value="Burdur">15 - Burdur</option> <option value="Bursa">16 - Bursa</option> <option value="Canakkale">17 - Çanakkale</option> <option value="Cankiri">18 - Çankırı</option> <option value="Corum">19 - Çorum</option> <option value="Denizli">20 - Denizli</option> <option value="Diyarbakir">21 - Diyarbakır</option> <option value="Edirne">22 - Edirne</option> <option value="Elazig">23 - Elazığ</option> <option value="Erzincan">24 - Erzincan</option> <option value="Erzurum">25 - Erzurum</option> <option value="Eskisehir">26 - Eskişehir</option> <option value="Gaziantep">27 - Gaziantep</option> <option value="Giresun">28 - Giresun</option> <option value="Gumushane">29 - Gümüşhane</option> <option value="Hakkari">30 - Hakkari</option> <option value="Hatay">31 - Hatay</option> <option value="Isparta">32 - Isparta</option> <option value="Mersin">33 - Mersin</option> <option value="Istanbul">34 - İstanbul</option> <option value="Izmir">35 - İzmir</option> <option value="Kars">36 - Kars</option> <option value="Kastamonu">37 - Kastamonu</option> <option value="Kayseri">38 - Kayseri</option> <option value="Kirklareli">39 - Kırklareli</option> <option value="Kirsehir">40 - Kırşehir</option> <option value="Kocaeli">41 - Kocaeli</option> <option value="Konya">42 - Konya</option> <option value="Kutahya">43 - Kütahya</option> <option value="Malatya">44 - Malatya</option> <option value="Manisa">45 - Manisa</option> <option value="Kahramanmaras">46 - Kahramanmaraş</option> <option value="Mardin">47 - Mardin</option> <option value="Mugla">48 - Muğla</option> <option value="Mus">49 - Muş</option> <option value="Nevsehir">50 - Nevşehir</option> <option value="Nigde">51 - Niğde</option> <option value="Ordu">52 - Ordu</option> <option value="Rize">53 - Rize</option> <option value="Sakarya">54 - Sakarya</option> <option value="Samsun">55 - Samsun</option> <option value="Siirt">56 - Siirt</option> <option value="Sinop">57 - Sinop</option> <option value="Sivas">58 - Sivas</option> <option value="Tekirdag">59 - Tekirdağ</option> <option value="Tokat">60 - Tokat</option> <option value="Trabzon">61 - Trabzon</option> <option value="Tunceli">62 - Tunceli</option> <option value="Sanliurfa">63 - Şanlıurfa</option> <option value="Usak">64 - Uşak</option> <option value="Van">65 - Van</option> <option value="Yozgat">66 - Yozgat</option> <option value="Zonguldak">67 - Zonguldak</option> <option value="Aksaray">68 - Aksaray</option> <option value="Bayburt">69 - Bayburt</option> <option value="Karaman">70 - Karaman</option> <option value="Kirikkale">71 - Kırıkkale</option> <option value="Batman">72 - Batman</option> <option value="Sirnak">73 - Şırnak</option> <option value="Bartin">74 - Bartın</option> <option value="Ardahan">75 - Ardahan</option> <option value="Igdir">76 - Iğdır</option> <option value="Yalova">77 - Yalova</option> <option value="Karabuk">78 - Karabük</option> <option value="Kilis">79 - Kilis</option> <option value="Osmaniye">80 - Osmaniye</option> <option value="Duzce">81 - Düzce</option>
+            </select>
+        </div>
 
-        <label style="font-size: 0.8rem; font-weight: 600; color: #007AFF; margin-left: 5px; text-transform: uppercase;">İlçe Seçimi</label>
-        <select id="ilce-secim" style="padding: 18px; border-radius: 18px; border: 1px solid #444; background: #2c2c2e; color: #fff; font-size: 1rem; cursor: pointer; outline: none; transition: 0.3s; appearance: none;">
-            <option value="">Önce İl Seçiniz</option>
-        </select>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="font-size: 0.75rem; font-weight: 700; color: #007AFF; margin-left: 5px; text-transform: uppercase; letter-spacing: 1px;">İlçe Seçin</label>
+            <select id="ilce-secim" style="padding: 18px; border-radius: 18px; border: 1px solid #444; background: #2c2c2e; color: #fff; font-size: 1rem; cursor: pointer; outline: none; transition: 0.3s; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23888%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 18px;">
+                <option value="">Önce İl Seçiniz</option>
+            </select>
+        </div>
 
-        <button onclick="gitEczaneye()" style="padding: 20px; border-radius: 18px; border: none; background: #007AFF; color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 15px; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,122,255,0.3);">
+        <button onclick="gitEczaneye()" style="padding: 20px; border-radius: 20px; border: none; background: linear-gradient(135deg, #007AFF 0%, #0051FF 100%); color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 15px; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,122,255,0.3);">
             Eczaneleri Listele →
         </button>
     </div>
 </div>
 
-<div style="max-width: 800px; margin: 60px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 0 20px;">
-    <div style="background: rgba(255,255,255,0.03); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
-        <h3 style="color: #007AFF; margin-bottom: 15px;">Hızlı ve Güncel Bilgi</h3>
-        <p style="color: #888; font-size: 0.95rem; line-height: 1.6;">Eczane360, Türkiye'nin 81 ilinde nöbetçi eczanelere en hızlı şekilde ulaşmanız için tasarlandı. Akıllı veri depolama sistemimiz sayesinde en güncel eczane listelerine beklemeden ulaşırsınız.</p>
+<div style="max-width: 900px; margin: 60px auto; padding: 0 20px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+        <div style="background: rgba(255,255,255,0.03); padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05);">
+            <h3 style="color: #007AFF; margin-bottom: 15px; font-weight: 700;">Hızlı ve Güncel Bilgi</h3>
+            <p style="color: #888; font-size: 0.95rem; line-height: 1.7;">Eczane360, Türkiye'nin 81 ilinde plaka koduna göre sıralanmış kolay arayüzü ile nöbetçi eczanelere en hızlı şekilde ulaşmanız için tasarlandı. Akıllı veri depolama sistemimiz sayesinde güncel eczane listelerine beklemeden erişirsiniz.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05);">
+            <h3 style="color: #007AFF; margin-bottom: 15px; font-weight: 700;">Kesintisiz Sağlık Erişimi</h3>
+            <p style="color: #888; font-size: 0.95rem; line-height: 1.7;">Resmi tatiller, hafta sonları ve gece saatlerinde size en yakın eczaneyi bulmak artık saniyeler sürüyor. Sakarya'dan Antalya'ya, İstanbul'dan Ankara'ya tüm Türkiye'de sağlık rehberiniz olmaya devam ediyoruz.</p>
+        </div>
     </div>
-    <div style="background: rgba(255,255,255,0.03); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
-        <h3 style="color: #007AFF; margin-bottom: 15px;">Kesintisiz Sağlık Erişimi</h3>
-        <p style="color: #888; font-size: 0.95rem; line-height: 1.6;">Resmi tatiller, hafta sonları ve gece saatlerinde size en yakın eczaneyi bulmak artık çok kolay. Antalya'dan Sakarya'ya, İstanbul'dan Ankara'ya tüm Türkiye kapsama alanımızda.</p>
+    
+    <div style="margin-top: 40px; text-align: center; color: #555; font-size: 0.85rem; line-height: 1.6;">
+        <p>Eczane360 platformu üzerinden sunulan veriler resmi kaynaklardan derlenmektedir. Her türlü sağlık sorununuzda en yakın sağlık kuruluşuna başvurmanızı öneririz. Gizliliğiniz bizim için önemlidir, KVKK politikamıza footer kısmından ulaşabilirsiniz.</p>
     </div>
 </div>
 
 <script>
+    // İlçe çekme fonksiyonu
     async function ilceGuncelle() {
         const il = document.getElementById('il-secim').value;
         const ilceSelect = document.getElementById('ilce-secim');
@@ -54,9 +66,9 @@
             
             if (data.status === "OK" && data.data.length > 0) {
                 const ilceler = data.data[0].districts;
-                ilceSelect.innerHTML = '<option value="">İlçe Seçiniz (Tümü için boş bırakın)</option>';
+                ilceSelect.innerHTML = '<option value="">Tüm İlçeler</option>';
                 
-                ilceler.sort((a, b) => a.name.localeCompare(b.name)).forEach(item => {
+                ilceler.sort((a, b) => a.name.localeCompare(b.name, 'tr')).forEach(item => {
                     const opt = document.createElement('option');
                     // API parametre uyumu için temizleme
                     opt.value = item.name.replace(/İ/g, 'I').replace(/ı/g, 'i').toUpperCase();
@@ -72,6 +84,7 @@
         }
     }
 
+    // Yönlendirme fonksiyonu
     function gitEczaneye() {
         const il = document.getElementById('il-secim').value;
         const ilce = document.getElementById('ilce-secim').value;
