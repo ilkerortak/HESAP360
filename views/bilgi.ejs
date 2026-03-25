@@ -2,37 +2,143 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title><%= baslik %></title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= baslik %> | Hesap360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        :root { --bg: #020617; --surface: #0f172a; --primary: #3b82f6; --text-dim: #94a3b8; }
-        body { background: var(--bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.8; margin: 0; }
-        .container { max-width: 800px; margin: 60px auto; padding: 40px; background: var(--surface); border-radius: 24px; border: 1px solid rgba(255,255,255,0.08); }
-        h1 { color: var(--primary); font-size: 2rem; margin-bottom: 30px; }
-        .content { color: var(--text-dim); }
-        .back-btn { display: inline-block; margin-bottom: 20px; color: var(--primary); text-decoration: none; font-weight: 700; }
+        :root { 
+            --bg: #020617; 
+            --surface: #0f172a; 
+            --primary: #3b82f6; 
+            --border: rgba(255, 255, 255, 0.08); 
+            --text-dim: #94a3b8; 
+        }
+
+        body { 
+            background: var(--bg); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            color: #fff; 
+            margin: 0; 
+            line-height: 1.7;
+            background-image: radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+        /* Üst Header Bölümü */
+        .page-header { margin-bottom: 50px; }
+        .back-link { 
+            text-decoration: none; color: var(--text-dim); font-size: 0.9rem; 
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
+        }
+        .back-link:hover { color: var(--primary); }
+        .page-header h1 { font-size: 2.5rem; font-weight: 800; margin: 20px 0 10px; }
+        .breadcrumb { color: var(--primary); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Ana İçerik Düzeni */
+        .layout { display: grid; grid-template-columns: 1fr 300px; gap: 40px; }
+
+        /* Makale Alanı */
+        .article-card { 
+            background: var(--surface); 
+            border: 1px solid var(--border); 
+            border-radius: 32px; 
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .article-card p { margin-bottom: 20px; font-size: 1.05rem; color: #cbd5e1; }
+        .article-card h2 { color: #fff; font-size: 1.5rem; margin-top: 40px; margin-bottom: 15px; border-left: 4px solid var(--primary); padding-left: 15px; }
+
+        /* Yan Menü (Hızlı Navigasyon) */
+        .sidebar { position: sticky; top: 40px; height: fit-content; }
+        .nav-card { 
+            background: rgba(15, 23, 42, 0.5); 
+            border: 1px solid var(--border); 
+            border-radius: 24px; 
+            padding: 25px; 
+        }
+        .nav-card h4 { margin: 0 0 20px 0; font-size: 1rem; color: var(--text-dim); }
+        .nav-item { 
+            display: flex; align-items: center; gap: 12px; 
+            padding: 12px 15px; border-radius: 12px; 
+            text-decoration: none; color: #fff; 
+            transition: 0.3s; margin-bottom: 8px;
+            font-size: 0.95rem; font-weight: 600;
+        }
+        .nav-item:hover { background: rgba(255,255,255,0.05); }
+        .nav-item.active { background: var(--primary); color: #fff; }
+        .nav-item i { width: 20px; text-align: center; }
+
+        @media (max-width: 900px) {
+            .layout { grid-template-columns: 1fr; }
+            .sidebar { position: static; }
+            .article-card { padding: 30px; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="/" class="back-btn">← Ana Sayfaya Dön</a>
+
+<div class="container">
+    <header class="page-header">
+        <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Ana Sayfaya Dön</a>
+        <div class="breadcrumb">Bilgi Merkezi</div>
         <h1><%= baslik %></h1>
-        
-        <div class="content">
+    </header>
+
+    <div class="layout">
+        <main class="article-card">
             <% if(sayfa === 'hakkimizda') { %>
-                <p>Hesap360, 2026 yılında kullanıcıların en doğru finansal kararları vermesini sağlamak amacıyla kurulmuş bağımsız bir karşılaştırma platformudur.</p>
-                <p>Amacımız; karmaşık bankacılık verilerini sadeleştirerek, kullanıcılarımıza en avantajlı kredi ve mevduat seçeneklerini sunmaktır.</p>
+                <h2>Vizyonumuz</h2>
+                <p>Hesap360, Türkiye'nin dijital finansal dönüşümünde kullanıcı deneyimini merkeze alan, bağımsız bir teknoloji platformudur. Karmaşık bankacılık algoritmalarını saniyeler içinde analiz ederek cebiniz için en doğru kararı vermenizi sağlarız.</p>
+                
+                <h2>Neden Hesap360?</h2>
+                <p>Piyasadaki diğer platformların aksine, biz sadece veri listelemiyoruz; kullanıcılarımızın kredi çekme potansiyellerini ve mevduat verimliliklerini kişiselleştirilmiş bir deneyimle sunuyoruz.</p>
+                
+                <p>2026 itibarıyla, yapay zeka destekli finansal analiz araçlarımızla Türkiye'nin en güvenilir finans portalı olma yolunda ilerliyoruz.</p>
+
             <% } else if(sayfa === 'kvkk') { %>
-                <p>6698 sayılı Kişisel Verilerin Korunması Kanunu uyarınca, verileriniz sadece hesaplama optimizasyonu için anonim olarak işlenmektedir.</p>
-                <p>Hesap360, kullanıcıların bankacılık şifrelerini veya gizli bilgilerini asla talep etmez.</p>
+                <h2>Veri Güvenliği Politikamız</h2>
+                <p>Kişisel verilerinizin gizliliği bizim için en yüksek önceliktir. Hesap360 üzerinden yaptığınız hesaplamalar sırasında paylaştığınız finansal rasyolar, kimliğinizle eşleştirilmeden anonim olarak işlenmektedir.</p>
+                
+                <h2>Çerez Kullanımı</h2>
+                <p>Platformumuzda sadece kullanıcı deneyimini iyileştirmek ve tercihlerinizi hatırlamak amacıyla teknik çerezler kullanılmaktadır. Üçüncü taraf reklam ağları (AdSense gibi) kendi gizlilik politikalarına tabidir.</p>
+
             <% } else if(sayfa === 'iletisim') { %>
-                <p>Sorularınız ve iş birliği talepleriniz için bize ulaşın:</p>
-                <p><b>E-posta:</b> destek@hesap360.com</p>
-                <p><b>Adres:</b> Finans Teknopark, Sakarya/Türkiye</p>
+                <h2>Bize Ulaşın</h2>
+                <p>Platformumuzla ilgili görüşleriniz, iş birliği teklifleriniz veya teknik destek talepleriniz için aşağıdaki kanallar üzerinden ekibimize ulaşabilirsiniz.</p>
+                
+                <div style="background: rgba(255,255,255,0.03); padding: 25px; border-radius: 20px; margin-top: 30px;">
+                    <p style="margin: 5px 0;"><i class="fa-solid fa-envelope" style="color: var(--primary);"></i> <b>E-posta:</b> hello@hesap360.com</p>
+                    <p style="margin: 5px 0;"><i class="fa-solid fa-location-dot" style="color: var(--primary);"></i> <b>Merkez:</b> Finans Teknopark, No:360 Sakarya</p>
+                </div>
+
             <% } else { %>
-                <p>Bu platformu kullanarak finansal verilerin doğruluğunu kabul etmiş sayılırsınız. Veriler bilgilendirme amaçlıdır.</p>
+                <h2>Kullanım Şartları</h2>
+                <p>Hesap360 üzerinden sunulan faiz oranları, taksit tutarları ve banka teklifleri bilgilendirme amaçlıdır. Nihai karar ve başvurular ilgili bankanın onayına tabidir.</p>
+                <p>Platformumuz, bankaların faiz politikalarındaki ani değişikliklerden sorumlu tutulamaz.</p>
             <% } %>
-        </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="nav-card">
+                <h4>HIZLI MENÜ</h4>
+                <a href="/bilgi/hakkimizda" class="nav-item <%= sayfa === 'hakkimizda' ? 'active' : '' %>">
+                    <i class="fa-solid fa-building"></i> Hakkımızda
+                </a>
+                <a href="/bilgi/kosullar" class="nav-item <%= sayfa === 'kosullar' ? 'active' : '' %>">
+                    <i class="fa-solid fa-file-contract"></i> Şartlar
+                </a>
+                <a href="/bilgi/kvkk" class="nav-item <%= sayfa === 'kvkk' ? 'active' : '' %>">
+                    <i class="fa-solid fa-shield-halved"></i> KVKK
+                </a>
+                <a href="/bilgi/iletisim" class="nav-item <%= sayfa === 'iletisim' ? 'active' : '' %>">
+                    <i class="fa-solid fa-headset"></i> İletişim
+                </a>
+            </div>
+        </aside>
     </div>
+</div>
+
 </body>
 </html>
