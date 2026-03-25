@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hesap360 | Finansal Analiz Portalı</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root { --bg: #020617; --surface: #0f172a; --primary: #3b82f6; --text: #f8fafc; --border: rgba(255, 255, 255, 0.08); }
+        body { background: var(--bg); font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text); margin: 0; background-image: radial-gradient(circle at 50% -20%, #1e40af33 0%, transparent 50%); min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        nav { padding: 30px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        .logo { font-size: 1.8rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -1.5px; }
+        .logo span { color: var(--primary); }
+        .hero { padding: 80px 0; text-align: center; }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+        .hero h1 span { color: var(--primary); }
+        .main-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 50px; }
+        .card { background: var(--surface); border: 1px solid var(--border); padding: 40px; border-radius: 32px; text-decoration: none; color: inherit; transition: 0.4s; }
+        .card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; display: block; }
+        footer { padding: 60px 0; text-align: center; border-top: 1px solid var(--border); margin-top: 100px; color: #64748b; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav><a href="/" class="logo">HESAP<span>360</span></a></nav>
+        <header class="hero">
+            <h1>Finansal Kararlarını <br><span>360 Derece</span> Analiz Et.</h1>
+            <p>Piyasanın en güçlü hesaplama motoruyla geleceğini planla.</p>
+        </header>
+        <div class="main-grid">
+            <a href="/kredi-limit" class="card">
+                <i class="fa-solid fa-gauge-high"></i>
+                <h3>Kredi Limit Analizi</h3>
+                <p>Bankaların limit politikalarına göre çekebileceğin maksimum tutarı öğren.</p>
+            </a>
+            <a href="#" class="card">
+                <i class="fa-solid fa-building-columns"></i>
+                <h3>Kredi Karşılaştırma</h3>
+                <p>En güncel faiz oranlarıyla bankaları analiz et ve tasarruf yap.</p>
+            </a>
+        </div>
+        <footer>© 2026 Hesap360 | Profesyonel Finansal Çözümler</footer>
+    </div>
+</body>
+</html>
