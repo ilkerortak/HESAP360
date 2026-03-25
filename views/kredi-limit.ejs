@@ -3,39 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Limit Tahmini | Hesap360</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --main: #6366f1; --bg: #0f172a; --glass: #1e293b; }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
-        .container { max-width: 600px; margin: 60px auto; padding: 20px; }
-        .calc-card { background: var(--glass); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
-        input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #334155; background: #0f172a; color: #fff; margin: 20px 0; font-size: 1.1rem; outline: none; }
-        .res-box { margin-top: 30px; padding: 20px; background: rgba(99, 102, 241, 0.1); border-radius: 20px; display: none; }
-        .btn-calc { background: var(--main); width: 100%; padding: 15px; border: none; border-radius: 12px; color: #fff; font-weight: 700; cursor: pointer; }
+        body { background: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .box { max-width: 500px; margin: 100px auto; background: #fff; padding: 40px; border-radius: 30px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        input { width: 100%; padding: 15px; border: 1px solid #edf2f7; border-radius: 12px; margin: 20px 0; font-size: 1rem; }
+        button { background: #0066ff; color: #fff; border: none; width: 100%; padding: 15px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        #res { margin-top: 30px; display: none; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="calc-card">
-            <h2 style="margin-top:0;">Kredi Limitini Öğren</h2>
-            <p style="color:#94a3b8;">Aylık net gelirinizi girerek bankaların size sunabileceği tahmini limiti hesaplayın.</p>
-            <input type="number" id="income" placeholder="Aylık Net Gelir (₺)">
-            <button class="btn-calc" onclick="calculateLimit()">Hesapla</button>
-            
-            <div id="result" class="res-box">
-                <small style="color:#94a3b8;">Tahmini Maksimum Limitiniz:</small>
-                <h2 id="limitVal" style="color:var(--main); margin:10px 0;">0 ₺</h2>
-                <p style="font-size:0.8rem; color:#64748b;">*Bu değer genel bankacılık rasyolarına göre hesaplanmıştır.</p>
-            </div>
-        </div>
+    <div class="box">
+        <h2>Kredi Limitini Hesapla</h2>
+        <p>Aylık gelirinizi girerek tahmini limiti görün.</p>
+        <input type="number" id="inc" placeholder="Aylık Net Gelir (₺)">
+        <button onclick="calc()">Hemen Hesapla</button>
+        <div id="res"><h3>Tahmini Limit: <br><span id="val" style="color:#0066ff">0 TL</span></h3></div>
     </div>
     <script>
-        function calculateLimit() {
-            const income = document.getElementById('income').value;
-            if(income > 0) {
-                const limit = income * 15; // Basit bankacı algoritması
-                document.getElementById('limitVal').innerText = limit.toLocaleString('tr-TR') + " ₺";
-                document.getElementById('result').style.display = 'block';
+        function calc() {
+            const v = document.getElementById('inc').value;
+            if(v > 0) {
+                document.getElementById('val').innerText = (v * 15).toLocaleString('tr-TR') + " TL";
+                document.getElementById('res').style.display = 'block';
             }
         }
     </script>
