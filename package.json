@@ -1,7 +1,7 @@
 {
   "name": "hesap360",
-  "version": "4.0.0",
-  "description": "Profesyonel Finansal Analiz Platformu",
+  "version": "4.2.0",
+  "description": "Hesap360 Finans Platformu",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
