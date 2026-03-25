@@ -1,26 +1,22 @@
 const express = require('express');
 const axios = require('axios');
-const NodeCache = require('node-cache');
 const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
-const fs = require('fs'); // Dosya sistemi entegre edildi
+const fs = require('fs');
 
 const app = express();
-const myCache = new NodeCache({ stdTTL: 3600 }); 
-const API_KEY = 'apikey 7wJjAEEMSukKl5nldRYtXC:6GY6N50VmT4y8dke6TWkyu'; 
+// BURAYA NOSYAPI'DEN ALDIĞIN TOKEN'I YAPIŞTIR
+const NOSY_TOKEN = 'CSsas9Y81PH7hgA3I1n6n3AHgKSQW32fmndxsNWSqzaHARVAorMP5rJyJ5oK'; 
 
-// Veri depolama klasörünü kontrol et yoksa oluştur
 const dataFolder = path.join(__dirname, 'data');
-if (!fs.existsSync(dataFolder)) {
-    fs.mkdirSync(dataFolder);
-}
+if (!fs.existsSync(dataFolder)) fs.mkdirSync(dataFolder);
 
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
-app.set('layout', 'layout'); 
+app.set('layout', 'layout');
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Karakter temizleme (API ve Filtreleme uyumu için)
+// Karakter temizleme fonksiyonu
 const trToEn = (str) => {
     if (!str) return "";
     return str.toLowerCase()
@@ -32,102 +28,80 @@ const trToEn = (str) => {
 };
 
 async function getEczaneler(sehir, ilceAd = "") {
-    const bugun = new Date().toISOString().split('T')[0]; // Örn: 2026-03-25
+    // Türkiye saatini baz alıyoruz (Örn: 2026-03-25)
+    const bugun = new Date().toLocaleDateString('tr-TR', { timeZone: 'Europe/Istanbul' }).split('.').reverse().join('-');
     const dosyaAdi = `${trToEn(sehir)}_${bugun}.json`;
     const dosyaYolu = path.join(dataFolder, dosyaAdi);
 
-    // 1. ADIM: DOSYADAN OKU (Günde 1 kereden fazla API harcamaz)
+    // 1. ÖNCE YEREL CACHE KONTROLÜ
     if (fs.existsSync(dosyaYolu)) {
-        try {
-            console.log(`[DEPO] ${sehir} verisi yerel dosyadan sunuluyor.`);
-            const dosyaVerisi = JSON.parse(fs.readFileSync(dosyaYolu, 'utf8'));
-            
-            if (ilceAd) {
-                return dosyaVerisi.filter(e => trToEn(e.dist) === trToEn(ilceAd) || (trToEn(ilceAd) === "adapazari" && trToEn(e.dist) === "merkez"));
-            }
-            return dosyaVerisi;
-        } catch (e) {
-            console.error("Dosya okuma hatası, API'ye gidiliyor...");
+        console.log(`[DEPO] ${sehir} verisi yerelden okundu.`);
+        const cachedData = JSON.parse(fs.readFileSync(dosyaYolu, 'utf8'));
+        if (ilceAd) {
+            return cachedData.filter(e => trToEn(e.district) === trToEn(ilceAd));
         }
+        return cachedData;
     }
 
-    // 2. ADIM: API'DEN ÇEK (Eğer o günün dosyası yoksa)
+    // 2. YERELDE YOKSA NOSYAPI'DEN ÇEK
     try {
-        console.log(`[API] ${sehir} için bugünün verisi çekiliyor...`);
-        // API'ye sadece şehir soruyoruz (En sağlam yöntem)
-        const url = `https://api.collectapi.com/health/dutyPharmacy?il=${encodeURIComponent(sehir)}`;
-
+        console.log(`[NOSY-API] ${sehir} için yeni veri çekiliyor...`);
+        const url = `https://www.nosyapi.com/apiv2/service/pharmacies-on-duty?city=${encodeURIComponent(sehir)}`;
+        
         const response = await axios.get(url, {
-            headers: { 
-                'authorization': API_KEY,
-                'content-type': 'application/json'
-            }
+            headers: { 'Authorization': `Bearer ${NOSY_TOKEN}` }
         });
 
-        if (response.data && response.data.success) {
-            const result = response.data.result || [];
+        if (response.data && response.data.status === "success") {
+            const result = response.data.data || [];
             
-            // Veriyi dosyaya kaydet (Yarından önce bir daha API'ye gitmez)
+            // Veriyi Yerel Depoya Yaz (Cache)
             fs.writeFileSync(dosyaYolu, JSON.stringify(result));
-            console.log(`[BAŞARI] ${sehir} verisi kaydedildi.`);
-
+            
             if (ilceAd) {
-                return result.filter(e => trToEn(e.dist) === trToEn(ilceAd) || (trToEn(ilceAd) === "adapazari" && trToEn(e.dist) === "merkez"));
+                return result.filter(e => trToEn(e.district) === trToEn(ilceAd));
             }
             return result;
         }
         return [];
     } catch (error) {
-        console.error("API Bağlantı Hatası:", error.message);
+        console.error("API Hatası:", error.message);
         return [];
     }
 }
 
+// Rotalar
 app.get('/eczaneler/:il/:ilce?', async (req, res) => {
     try {
-        const ilRaw = req.params.il;
-        const ilceRaw = req.params.ilce || "";
-        
-        const veriler = await getEczaneler(ilRaw, ilceRaw);
-        
-        const formatliEczaneler = veriler.map(e => ({
+        const veriler = await getEczaneler(req.params.il, req.params.ilce || "");
+        const formatli = veriler.map(e => ({
             ad: e.name.toUpperCase(),
             adres: e.address,
             tel: e.phone.replace(/\D/g, ''),
-            ilce: e.dist.toUpperCase()
+            ilce: e.district.toUpperCase(),
+            maps: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.name + ' Eczanesi ' + e.address)}`
         }));
-
-        const baslik = ilceRaw ? `${ilRaw.toUpperCase()} / ${ilceRaw.toUpperCase()}` : ilRaw.toUpperCase();
-        res.render('liste', { il: baslik, eczaneler: formatliEczaneler });
+        res.render('liste', { il: req.params.il.toUpperCase(), eczaneler: formatli });
     } catch (err) {
-        res.render('liste', { il: "HATA", eczaneler: [] });
+        res.render('liste', { il: req.params.il.toUpperCase(), eczaneler: [] });
     }
 });
 
-app.get('/', (req, res) => {
-    res.render('index', { title: 'Eczane360' });
-});
-
+// Manuel temizleme rotası (Önemli!)
 app.get('/temizle', (req, res) => {
     if (fs.existsSync(dataFolder)) {
         fs.rmSync(dataFolder, { recursive: true, force: true });
         fs.mkdirSync(dataFolder);
-        return res.send("✅ Depo boşaltıldı! Şimdi sayfayı yenileyip taze veriyi çekebilirsin.");
     }
-    res.send("Zaten depo boş.");
+    res.send("✅ Depo temizlendi. Yeni sorgular en güncel veriyi çekecek.");
 });
 
-app.get('/ads.txt', (req, res) => {
-    res.send('google.com, pub-1894587939365426, DIRECT, f08c47fec0942fa0');
-});
+app.get('/', (req, res) => res.render('index', { title: 'Eczane360' }));
+app.get('/ads.txt', (req, res) => res.send('google.com, pub-1894587939365426, DIRECT, f08c47fec0942fa0'));
 
-const PORT = process.env.PORT || 8080;
-app.get('/hakkimizda', (req, res) => { res.render('hakkimizda', { title: 'Hakkımızda' }); });
-app.get('/kvkk', (req, res) => { res.render('kvkk', { title: 'KVKK' }); });
-app.get('/iletisim', (req, res) => { res.render('iletisim', { title: 'İletişim' }); });
-app.listen(PORT, () => {
-    console.log(`-------------------------------------------`);
-    console.log(`Eczane360 SİSTEMİ PORT ${PORT} ÜZERİNDE AKTİF`);
-    console.log(`Günlük Kota Koruması: DEVREDE`);
-    console.log(`-------------------------------------------`);
-});
+// Hakkımızda, KVKK ve İletişim rotaları
+app.get('/hakkimizda', (req, res) => res.render('hakkimizda', { title: 'Hakkımızda' }));
+app.get('/kvkk', (req, res) => res.render('kvkk', { title: 'KVKK' }));
+app.get('/iletisim', (req, res) => res.render('iletisim', { title: 'İletişim' }));
+
+app.listen(process.env.PORT || 8080, () => console.log("Eczane360 Yayında!"));
