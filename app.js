@@ -6,7 +6,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// VERİ SETİ (Hata almamak için boş bırakılmadı)
+// MERKEZİ VERİ SETİ
 const financeData = {
     market: { usd: "32.45", eur: "35.12", gold: "2.450" },
     banks: [
@@ -18,18 +18,11 @@ const financeData = {
 };
 
 // ROTALAR
-app.get('/', (req, res) => {
-    res.render('index', { data: financeData });
-});
-
-app.get('/kredi', (req, res) => {
-    res.render('kredi', { banks: financeData.banks });
-});
-
-// Kredi Kartı ve Limit sayfaları için boş array göndererek hata almasını engelliyoruz
+app.get('/', (req, res) => { res.render('index', { data: financeData }); });
+app.get('/kredi', (req, res) => { res.render('kredi', { banks: financeData.banks }); });
 app.get('/kredi-karti', (req, res) => { res.render('kredi-karti'); });
 app.get('/kredi-limit', (req, res) => { res.render('kredi-limit'); });
 app.get('/mevduat', (req, res) => { res.render('mevduat', { banks: financeData.banks }); });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server port ${PORT} üzerinde aktif.`));
+app.listen(PORT, () => console.log(`Sunucu ${PORT} portunda aktif.`));
