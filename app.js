@@ -41,7 +41,6 @@ async function getEczaneler(sehir, ilce = "") {
             headers: { 'Authorization': `Bearer ${NOSY_TOKEN}` }
         });
 
-        // Senin attığın JSON yapısına göre veri response.data.data içinde
         const result = response.data.data || [];
         
         if (result.length > 0) {
@@ -54,6 +53,25 @@ async function getEczaneler(sehir, ilce = "") {
     }
 }
 
+// --- OTOMATİK TEMİZLİK (SABAH 09:00) ---
+cron.schedule('0 9 * * *', () => {
+    if (fs.existsSync(dataFolder)) {
+        try {
+            const files = fs.readdirSync(dataFolder);
+            for (const file of files) {
+                fs.unlinkSync(path.join(dataFolder, file));
+            }
+            console.log(`[${new Date().toLocaleString('tr-TR')}] Sabah temizliği yapıldı: ${files.length} dosya silindi.`);
+        } catch (err) {
+            console.error("Otomatik temizlik hatası:", err);
+        }
+    }
+}, {
+    scheduled: true,
+    timezone: "Europe/Istanbul"
+});
+
+// --- ROTALAR ---
 app.get('/eczaneler/:il/:ilce?', async (req, res) => {
     const il = req.params.il;
     const ilceReq = req.params.ilce || "";
@@ -62,7 +80,6 @@ app.get('/eczaneler/:il/:ilce?', async (req, res) => {
         const hamVeriler = await getEczaneler(il, ilceReq);
         
         const formatli = hamVeriler.map(e => {
-            // İŞTE KRİTİK NOKTA: Senin paylaştığın JSON'daki anahtarlar:
             const ad = e.pharmacyName || e.name || e.EczaneAd || "Bilinmiyor";
             const adres = e.address || e.Adresi || "Adres bilgisi yok";
             const tel = (e.phone || "").toString().replace(/\D/g, '');
@@ -92,11 +109,13 @@ app.get('/temizle', (req, res) => {
         fs.rmSync(dataFolder, { recursive: true, force: true });
         fs.mkdirSync(dataFolder);
     }
-    res.send("✅ Depo boşaltıldı. Şimdi isimler gelmeli!");
+    res.send("✅ Depo manuel olarak sıfırlandı.");
 });
 
-// Sayfalar
 app.get('/', (req, res) => res.render('index', { title: 'Eczane360' }));
 app.get('/ads.txt', (req, res) => res.send('google.com, pub-1894587939365426, DIRECT, f08c47fec0942fa0'));
 
-app.listen(process.env.PORT || 8080);
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Eczane360 ${PORT} portunda yayında ve sabah 09:00 temizliği aktif!`);
+});
