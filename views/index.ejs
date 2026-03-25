@@ -1,24 +1,69 @@
-<div style="text-align: center; padding: 40px 0 60px;">
-    <h1 style="font-size: 3.2rem; font-weight: 800; letter-spacing: -2px; line-height: 1.1;">Maliyetini <span style="color: var(--blue);">Şeffafça</span> Gör.</h1>
-    <p style="opacity: 0.6; font-size: 1.2rem; margin-top: 20px;">2026 yılı güncel verileriyle hayatınızı planlayın.</p>
-</div>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bi'Maliyet | <%= title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root { --bg: #F5F5F7; --card: #FFFFFF; --text: #1D1D1F; --blue: #0066FF; --border: #D2D2D7; }
+        [data-theme="dark"] { --bg: #000000; --card: #1C1C1E; --text: #F5F5F7; --blue: #0A84FF; --border: #38383A; }
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;">
-    <a href="/arac-maliyet" class="glass-card" style="text-decoration: none; color: inherit;">
-        <i class="fa-solid fa-paint-roller" style="font-size: 2rem; color: var(--blue); margin-bottom: 20px;"></i>
-        <h3>Araç Renk Değişimi</h3>
-        <p style="opacity: 0.6;">Boya masrafından noter harcına kadar 2026 maliyet tablosu.</p>
-        <span style="color: var(--blue); font-weight: 700; display: block; margin-top: 15px;">Hesapla →</span>
-    </a>
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, sans-serif; margin: 0; transition: 0.3s; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 8%; background: var(--card); border-bottom: 1px solid var(--border); }
+        .container { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
+        
+        .hero h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; margin: 0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 50px; }
+        
+        .apple-card { 
+            background: var(--card); padding: 35px; border-radius: 24px; border: 1px solid var(--border); 
+            text-decoration: none; color: inherit; transition: 0.3s ease; display: block;
+        }
+        .apple-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        
+        .mode-toggle { background: var(--blue); color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div style="font-weight: 800; font-size: 1.4rem;">BI'<span>MALIYET</span></div>
+        <button class="mode-toggle" onclick="toggleMode()">🌓 Görünüm</button>
+    </nav>
 
-    <div class="glass-card">
-        <i class="fa-solid fa-id-card" style="font-size: 2rem; color: #34C759; margin-bottom: 20px;"></i>
-        <h3>Ehliyet & Pasaport</h3>
-        <p style="opacity: 0.6;">Yeni yılda zamlı harç bedelleri ve değerli kağıt ücretleri.</p>
-        <span style="color: #34C759; font-weight: 700; display: block; margin-top: 15px;">Yakında</span>
+    <div class="container">
+        <div style="text-align: center;">
+            <h1>Maliyetini <span style="color: var(--blue);">Net Gör.</span></h1>
+            <p style="font-size: 1.2rem; opacity: 0.6; margin-top: 20px;">2026 güncel verileriyle hızlı hesaplama araçları.</p>
+        </div>
+
+        <div class="grid">
+            <a href="/arac-maliyet" class="apple-card">
+                <i class="fa-solid fa-paint-roller" style="font-size: 2rem; color: var(--blue); margin-bottom: 15px;"></i>
+                <h3>Araç Renk Değişimi</h3>
+                <p style="opacity: 0.6; font-size: 0.9rem;">Boya masrafı, noter harcı ve ruhsat maliyetlerini hesaplayın.</p>
+            </a>
+            
+            <div class="apple-card" style="opacity: 0.5;">
+                <i class="fa-solid fa-passport" style="font-size: 2rem; color: #FF9500; margin-bottom: 15px;"></i>
+                <h3>Resmi Harçlar 2026</h3>
+                <p>Pasaport ve ehliyet bedelleri çok yakında burada.</p>
+            </div>
+        </div>
+
+        <div class="apple-card" style="margin-top: 40px; text-align: center; border-style: dashed;">
+            <p style="font-size: 0.8rem; opacity: 0.5;">REKLAM ALANI</p>
+        </div>
     </div>
-</div>
 
-<div class="glass-card" style="margin-top: 40px; text-align: center; border-style: dashed; opacity: 0.4;">
-    <p>REKLAM ALANI (ADSENSE)</p>
-</div>
+    <script>
+        function toggleMode() {
+            const html = document.documentElement;
+            const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+    </script>
+</body>
+</html>
