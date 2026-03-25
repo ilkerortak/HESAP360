@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hesap360 | Profesyonel Finans Analizi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #F5F5F7; --card: #FFFFFF; --text: #1D1D1F; --blue: #0066FF; --border: #D2D2D7;
+        }
+        [data-theme="dark"] {
+            --bg: #000000; --card: #1C1C1E; --text: #F5F5F7; --blue: #0A84FF; --border: #38383A;
+        }
+
+        body { 
+            background: var(--bg); color: var(--text); 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            margin: 0; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 8%; background: rgba(var(--card), 0.8);
+            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .logo { font-size: 1.4rem; font-weight: 800; text-decoration: none; color: var(--text); }
+        .logo span { color: var(--blue); }
+
+        .theme-toggle {
+            background: var(--border); border: none; padding: 8px 16px;
+            border-radius: 20px; color: var(--text); cursor: pointer; font-weight: 600;
+        }
+
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        
+        /* Kart Tasarımları */
+        .apple-card {
+            background: var(--card); border-radius: 24px; padding: 30px;
+            border: 1px solid var(--border); box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+            margin-bottom: 20px; transition: 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">HESAP<span>360</span></a>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓 Mod Değiştir</button>
+    </nav>
+
+    <div class="container">
+        <%- body %> 
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', target);
+            localStorage.setItem('theme', target);
+        }
+        // Sayfa yüklendiğinde tercihi hatırla
+        const saved = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', saved);
+    </script>
+</body>
+</html>
