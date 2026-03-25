@@ -1,23 +1,24 @@
 const express = require('express');
-const app = express();
 const path = require('path');
-const expressLayouts = require('express-ejs-layouts');
+const app = express();
 
 // Görünüm Motoru Ayarları
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(expressLayouts);
-app.set('layout', 'layout');
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Ana Sayfa Rotası
+// Rotalar
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', { title: 'Ana Sayfa' });
 });
 
-// Araç Maliyet Sayfası
 app.get('/arac-maliyet', (req, res) => {
-    res.render('arac-maliyet');
+    res.render('arac-maliyet', { title: 'Araç Maliyet Hesaplama' });
+});
+
+// AdSense ads.txt Doğrulaması İçin (Senin Yayıncı Kimliğinle)
+app.get('/ads.txt', (req, res) => {
+    res.send('google.com, pub-1894587939365426, DIRECT, f08c47fec0942fa0');
 });
 
 const PORT = process.env.PORT || 3000;
