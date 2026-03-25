@@ -1,199 +1,102 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eczane360 | Türkiye Nöbetçi Eczane Rehberi</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: #000; color: #fff; line-height: 1.6; overflow-x: hidden; }
+<div class="apple-card" style="text-align: center; max-width: 550px; margin: 40px auto; padding: 40px; border-radius: 30px; background: rgba(28, 28, 30, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+    
+    <div style="background: rgba(0, 122, 255, 0.1); width: 68px; height: 68px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; border: 1px solid rgba(0, 122, 255, 0.2);">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 6V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V6" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M19 6H5C3.89543 6 3 6.89543 3 8V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V8C21 6.89543 20.1046 6 19 6Z" stroke="#007AFF" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M10 13H14M12 11V15" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    </div>
+
+    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; color: #fff; letter-spacing: -1px;">Nöbetçi Eczane Bul</h1>
+    <p style="opacity: 0.6; margin-bottom: 35px; color: #fff; font-size: 1.1rem;">Türkiye geneli 81 ilde güncel nöbetçi eczane listeleri.</p>
+
+    <div style="display: flex; flex-direction: column; gap: 18px; text-align: left;">
         
-        /* Ana Konteyner */
-        .main-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-        /* Logo Alanı */
-        .navbar { padding: 20px 0; margin-bottom: 40px; }
-        .logo { font-size: 1.5rem; font-weight: 800; color: #007AFF; text-decoration: none; letter-spacing: -1px; }
-        .logo span { color: #fff; }
-
-        /* Apple Style Arama Kartı */
-        .apple-card {
-            text-align: center; max-width: 550px; margin: 40px auto; padding: 40px; 
-            border-radius: 30px; background: rgba(28, 28, 30, 0.8); backdrop-filter: blur(20px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        .icon-box {
-            background: rgba(0, 122, 255, 0.1); width: 68px; height: 68px; border-radius: 20px; 
-            display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; 
-            border: 1px solid rgba(0, 122, 255, 0.2);
-        }
-
-        h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; color: #fff; letter-spacing: -1px; }
-        .subtitle { opacity: 0.6; margin-bottom: 35px; color: #fff; font-size: 1.1rem; }
-
-        .form-group { display: flex; flex-direction: column; gap: 18px; text-align: left; }
-        .input-wrapper { display: flex; flex-direction: column; gap: 8px; }
-        label { font-size: 0.75rem; font-weight: 700; color: #007AFF; margin-left: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        
-        select {
-            padding: 18px; border-radius: 18px; border: 1px solid #444; background: #2c2c2e; 
-            color: #fff; font-size: 1rem; cursor: pointer; outline: none; transition: 0.3s; 
-            appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%23888%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E'); 
-            background-repeat: no-repeat; background-position: right 15px center; background-size: 18px;
-        }
-        select:focus { border-color: #007AFF; }
-
-        .search-btn {
-            padding: 20px; border-radius: 20px; border: none; 
-            background: linear-gradient(135deg, #007AFF 0%, #0051FF 100%); 
-            color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer; 
-            margin-top: 15px; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,122,255,0.3);
-        }
-        .search-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(0,122,255,0.4); }
-
-        /* Bilgi Rozetleri */
-        .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 80px 0 50px; }
-        .badge { background: rgba(255, 255, 255, 0.05); padding: 8px 20px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .badge.blue { color: #007AFF; background: rgba(0, 122, 255, 0.1); border-color: rgba(0, 122, 255, 0.2); }
-        .badge.green { color: #30D158; background: rgba(48, 209, 88, 0.1); border-color: rgba(48, 209, 88, 0.2); }
-        .badge.orange { color: #FF9F0A; background: rgba(255, 159, 10, 0.1); border-color: rgba(255, 159, 10, 0.2); }
-
-        /* Bilgi Kartları Grid */
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
-        .info-card { background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%); padding: 35px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); }
-        .info-card h3 { color: #fff; margin-bottom: 15px; font-weight: 700; font-size: 1.25rem; }
-        .info-card p { color: #999; font-size: 1rem; line-height: 1.8; }
-
-        /* SEO Metin Alanı */
-        .seo-section { text-align: center; max-width: 850px; margin: 0 auto 80px; background: rgba(255,255,255,0.02); padding: 40px; border-radius: 35px; border: 1px solid rgba(255,255,255,0.03); }
-        .seo-section h2 { color: #fff; font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 25px; }
-        .seo-content { color: #777; font-size: 1rem; line-height: 1.9; text-align: justify; }
-
-        /* Tekil Modern Footer */
-        .footer { margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; padding-bottom: 40px; }
-        .footer-links { margin-bottom: 25px; opacity: 0.8; }
-        .footer-links a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
-        .footer-links a:hover { color: #007AFF; }
-        .copyright { color: #666; font-size: 0.85rem; margin-bottom: 8px; }
-        .disclaimer { color: #444; font-size: 0.75rem; max-width: 600px; margin: 0 auto; line-height: 1.5; }
-    </style>
-</head>
-<body>
-
-<div class="main-container">
-    <nav class="navbar">
-        <a href="/" class="logo">ECZANE<span>360</span></a>
-    </nav>
-
-    <div class="apple-card">
-        <div class="icon-box">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 6V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V6" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M19 6H5C3.89543 6 3 6.89543 3 8V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V8C21 6.89543 20.1046 6 19 6Z" stroke="#007AFF" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M10 13H14M12 11V15" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="font-size: 0.75rem; font-weight: 700; color: #007AFF; margin-left: 5px; text-transform: uppercase; letter-spacing: 1px;">Şehir Seçin</label>
+            <select id="il-secim" onchange="ilceGuncelle()" style="padding: 18px; border-radius: 18px; border: 1px solid #444; background: #2c2c2e; color: #fff; font-size: 1rem; cursor: pointer; outline: none; transition: 0.3s; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23888%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 18px;">
+                <option value="">İl Seçiniz</option>
+                <option value="Adana">01 - Adana</option> <option value="Adiyaman">02 - Adıyaman</option> <option value="Afyonkarahisar">03 - Afyonkarahisar</option> <option value="Agri">04 - Ağrı</option> <option value="Amasya">05 - Amasya</option> <option value="Ankara">06 - Ankara</option> <option value="Antalya">07 - Antalya</option> <option value="Artvin">08 - Artvin</option> <option value="Aydin">09 - Aydın</option> <option value="Balikesir">10 - Balıkesir</option> <option value="Bilecik">11 - Bilecik</option> <option value="Bingol">12 - Bingöl</option> <option value="Bitlis">13 - Bitlis</option> <option value="Bolu">14 - Bolu</option> <option value="Burdur">15 - Burdur</option> <option value="Bursa">16 - Bursa</option> <option value="Canakkale">17 - Çanakkale</option> <option value="Cankiri">18 - Çankırı</option> <option value="Corum">19 - Çorum</option> <option value="Denizli">20 - Denizli</option> <option value="Diyarbakir">21 - Diyarbakır</option> <option value="Edirne">22 - Edirne</option> <option value="Elazig">23 - Elazığ</option> <option value="Erzincan">24 - Erzincan</option> <option value="Erzurum">25 - Erzurum</option> <option value="Eskisehir">26 - Eskişehir</option> <option value="Gaziantep">27 - Gaziantep</option> <option value="Giresun">28 - Giresun</option> <option value="Gumushane">29 - Gümüşhane</option> <option value="Hakkari">30 - Hakkari</option> <option value="Hatay">31 - Hatay</option> <option value="Isparta">32 - Isparta</option> <option value="Mersin">33 - Mersin</option> <option value="Istanbul">34 - İstanbul</option> <option value="Izmir">35 - İzmir</option> <option value="Kars">36 - Kars</option> <option value="Kastamonu">37 - Kastamonu</option> <option value="Kayseri">38 - Kayseri</option> <option value="Kirklareli">39 - Kırklareli</option> <option value="Kirsehir">40 - Kırşehir</option> <option value="Kocaeli">41 - Kocaeli</option> <option value="Konya">42 - Konya</option> <option value="Kutahya">43 - Kütahya</option> <option value="Malatya">44 - Malatya</option> <option value="Manisa">45 - Manisa</option> <option value="Kahramanmaras">46 - Kahramanmaraş</option> <option value="Mardin">47 - Mardin</option> <option value="Mugla">48 - Muğla</option> <option value="Mus">49 - Muş</option> <option value="Nevsehir">50 - Nevşehir</option> <option value="Nigde">51 - Niğde</option> <option value="Ordu">52 - Ordu</option> <option value="Rize">53 - Rize</option> <option value="Sakarya">54 - Sakarya</option> <option value="Samsun">55 - Samsun</option> <option value="Siirt">56 - Siirt</option> <option value="Sinop">57 - Sinop</option> <option value="Sivas">58 - Sivas</option> <option value="Tekirdag">59 - Tekirdağ</option> <option value="Tokat">60 - Tokat</option> <option value="Trabzon">61 - Trabzon</option> <option value="Tunceli">62 - Tunceli</option> <option value="Sanliurfa">63 - Şanlıurfa</option> <option value="Usak">64 - Uşak</option> <option value="Van">65 - Van</option> <option value="Yozgat">66 - Yozgat</option> <option value="Zonguldak">67 - Zonguldak</option> <option value="Aksaray">68 - Aksaray</option> <option value="Bayburt">69 - Bayburt</option> <option value="Karaman">70 - Karaman</option> <option value="Kirikkale">71 - Kırıkkale</option> <option value="Batman">72 - Batman</option> <option value="Sirnak">73 - Şırnak</option> <option value="Bartin">74 - Bartın</option> <option value="Ardahan">75 - Ardahan</option> <option value="Igdir">76 - Iğdır</option> <option value="Yalova">77 - Yalova</option> <option value="Karabuk">78 - Karabük</option> <option value="Kilis">79 - Kilis</option> <option value="Osmaniye">80 - Osmaniye</option> <option value="Duzce">81 - Düzce</option>
+            </select>
         </div>
-        <h1>Nöbetçi Eczane Bul</h1>
-        <p class="subtitle">Türkiye geneli 81 ilde güncel nöbetçi eczane listeleri.</p>
 
-        <div class="form-group">
-            <div class="input-wrapper">
-                <label>Şehir Seçin</label>
-                <select id="il-secim" onchange="ilceGuncelle()">
-                    <option value="">İl Seçiniz</option>
-                    <option value="ADANA" data-plaka="1">01 - Adana</option>
-                    <option value="ANKARA" data-plaka="6">06 - Ankara</option>
-                    <option value="ISTANBUL" data-plaka="34">34 - İstanbul</option>
-                    <option value="IZMIR" data-plaka="35">35 - İzmir</option>
-                    <option value="SAKARYA" data-plaka="54">54 - Sakarya</option>
-                </select>
-            </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="font-size: 0.75rem; font-weight: 700; color: #007AFF; margin-left: 5px; text-transform: uppercase; letter-spacing: 1px;">İlçe Seçin</label>
+            <select id="ilce-secim" style="padding: 18px; border-radius: 18px; border: 1px solid #444; background: #2c2c2e; color: #fff; font-size: 1rem; cursor: pointer; outline: none; transition: 0.3s; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23888%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 18px;">
+                <option value="">Önce İl Seçiniz</option>
+            </select>
+        </div>
 
-            <div class="input-wrapper">
-                <label>İlçe Seçin</label>
-                <select id="ilce-secim">
-                    <option value="">Önce İl Seçiniz</option>
-                </select>
-            </div>
+        <button onclick="gitEczaneye()" style="padding: 20px; border-radius: 20px; border: none; background: linear-gradient(135deg, #007AFF 0%, #0051FF 100%); color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 15px; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,122,255,0.3);">
+            Eczaneleri Listele →
+        </button>
+    </div>
+</div>
 
-            <button onclick="gitEczaneye()" class="search-btn">Eczaneleri Listele →</button>
+<div style="max-width: 900px; margin: 60px auto; padding: 0 20px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+        <div style="background: rgba(255,255,255,0.03); padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05);">
+            <h3 style="color: #007AFF; margin-bottom: 15px; font-weight: 700;">Hızlı ve Güncel Bilgi</h3>
+            <p style="color: #888; font-size: 0.95rem; line-height: 1.7;">Eczane360, Türkiye'nin 81 ilinde plaka koduna göre sıralanmış kolay arayüzü ile nöbetçi eczanelere en hızlı şekilde ulaşmanız için tasarlandı. Akıllı veri depolama sistemimiz sayesinde güncel eczane listelerine beklemeden erişirsiniz.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05);">
+            <h3 style="color: #007AFF; margin-bottom: 15px; font-weight: 700;">Kesintisiz Sağlık Erişimi</h3>
+            <p style="color: #888; font-size: 0.95rem; line-height: 1.7;">Resmi tatiller, hafta sonları ve gece saatlerinde size en yakın eczaneyi bulmak artık saniyeler sürüyor. Sakarya'dan Antalya'ya, İstanbul'dan Ankara'ya tüm Türkiye'de sağlık rehberiniz olmaya devam ediyoruz.</p>
         </div>
     </div>
-
-    <div class="badges">
-        <span class="badge blue">📍 81 İl Kapsamı</span>
-        <span class="badge green">⚡ Anlık Güncelleme</span>
-        <span class="badge orange">🔒 %100 Güvenli</span>
+    
+    <div style="margin-top: 40px; text-align: center; color: #555; font-size: 0.85rem; line-height: 1.6;">
+        <p>Eczane360 platformu üzerinden sunulan veriler resmi kaynaklardan derlenmektedir. Her türlü sağlık sorununuzda en yakın sağlık kuruluşuna başvurmanızı öneririz. Gizliliğiniz bizim için önemlidir, KVKK politikamıza footer kısmından ulaşabilirsiniz.</p>
     </div>
-
-    <div class="info-grid">
-        <div class="info-card">
-            <h3>Hızlı ve Güncel Bilgi</h3>
-            <p>Eczane360, plaka koduna göre sıralanmış kolay arayüzü ile aradığınız eczaneye milisaniyeler içinde ulaşmanız için tasarlandı.</p>
-        </div>
-        <div class="info-card">
-            <h3>Kesintisiz Sağlık Erişimi</h3>
-            <p>Resmi tatiller, hafta sonları ve gece saatlerinde en yakın eczaneyi bulmak saniyeler sürer. Tüm Türkiye'de yanınızdayız.</p>
-        </div>
-    </div>
-
-    <div class="seo-section">
-        <h2>Türkiye'nin Dijital Nöbetçi Eczane Rehberi</h2>
-        <div class="seo-content">
-            <p><strong>Eczane360</strong>, Türkiye'nin en kapsamlı nöbetçi eczane sorgulama platformudur. Smart Cache teknolojisi ile düşük internet hızlarında bile anlık sonuç verir.</p>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="/hakkimizda">Hakkımızda</a>
-            <a href="/kvkk">KVKK</a>
-            <a href="/iletisim">İletişim</a>
-        </div>
-        <p class="copyright">© 2026 <strong>Eczane360</strong> | Tüm Hakları Saklıdır.</p>
-        <p class="disclaimer">Veriler resmi kaynaklardan derlenmektedir. Bilgilendirme amaçlıdır.</p>
-    </footer>
 </div>
 
 <script>
+    // İlçe çekme fonksiyonu
     async function ilceGuncelle() {
-        const ilSelect = document.getElementById('il-secim');
-        const selectedOption = ilSelect.options[ilSelect.selectedIndex];
-        const plaka = selectedOption.getAttribute('data-plaka');
+        const il = document.getElementById('il-secim').value;
         const ilceSelect = document.getElementById('ilce-secim');
         
-        if (!plaka) {
+        if (!il) {
             ilceSelect.innerHTML = '<option value="">Önce İl Seçiniz</option>';
             return;
         }
+
         ilceSelect.innerHTML = '<option value="">Yükleniyor...</option>';
 
         try {
-            const response = await fetch(`https://turkiyeapi.dev/api/v1/provinces/${plaka}`);
+            const response = await fetch(`https://turkiyeapi.dev/api/v1/provinces?name=${il}`);
             const data = await response.json();
-            if (data.status === "OK") {
-                const ilceler = data.data.districts;
+            
+            if (data.status === "OK" && data.data.length > 0) {
+                const ilceler = data.data[0].districts;
                 ilceSelect.innerHTML = '<option value="">Tüm İlçeler</option>';
+                
                 ilceler.sort((a, b) => a.name.localeCompare(b.name, 'tr')).forEach(item => {
                     const opt = document.createElement('option');
-                    const normalizeVal = item.name.replace(/İ/g, 'I').replace(/ı/g, 'i').replace(/Ş/g, 'S').replace(/ş/g, 's').replace(/Ğ/g, 'G').replace(/ğ/g, 'g').replace(/Ü/g, 'U').replace(/ü/g, 'u').replace(/Ö/g, 'O').replace(/ö/g, 'o').replace(/Ç/g, 'C').replace(/ç/g, 'c').toUpperCase();
-                    opt.value = normalizeVal;
+                    // API parametre uyumu için temizleme
+                    opt.value = item.name.replace(/İ/g, 'I').replace(/ı/g, 'i').toUpperCase();
                     opt.innerHTML = item.name;
                     ilceSelect.appendChild(opt);
                 });
+            } else {
+                ilceSelect.innerHTML = '<option value="">İlçe bulunamadı</option>';
             }
-        } catch (error) { console.error("Hata:", error); }
+        } catch (error) {
+            console.error("İlçe çekme hatası:", error);
+            ilceSelect.innerHTML = '<option value="">Hata oluştu</option>';
+        }
     }
 
+    // Yönlendirme fonksiyonu
     function gitEczaneye() {
         const il = document.getElementById('il-secim').value;
         const ilce = document.getElementById('ilce-secim').value;
         if (il) {
-            window.location.href = ilce ? `/eczaneler/${il}/${ilce}` : `/eczaneler/${il}`;
-        } else { alert("Lütfen bir il seçiniz."); }
+            const url = ilce ? `/eczaneler/${il}/${ilce}` : `/eczaneler/${il}`;
+            window.location.href = url;
+        } else {
+            alert("Lütfen bir il seçiniz.");
+        }
     }
 </script>
-
-</body>
-</html>
