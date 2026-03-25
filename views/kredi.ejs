@@ -2,32 +2,38 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Kredi Karşılaştır | Hesap360</title>
+    <meta name="referrer" content="no-referrer"> <title>Kredi Karşılaştır | Hesap360</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #020617; --surface: #0f172a; --primary: #3b82f6; --border: rgba(255, 255, 255, 0.08); }
+        :root { --bg: #020617; --surface: #0f172a; --primary: #3b82f6; --border: rgba(255, 255, 255, 0.08); --text-dim: #94a3b8; }
         body { background: var(--bg); font-family: 'Plus Jakarta Sans', sans-serif; color: #fff; margin: 0; }
         .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
         .filter-card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
-        input[type="range"] { width: 100%; accent-color: var(--primary); }
-        .bank-row { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 25px; display: grid; grid-template-columns: 150px 1fr 1fr 1fr 150px; align-items: center; gap: 20px; margin-bottom: 15px; transition: 0.3s; }
-        .bank-row:hover { border-color: var(--primary); }
-        .bank-logo { background: #fff; padding: 10px; border-radius: 12px; height: 50px; display: flex; align-items: center; justify-content: center; }
+        input[type="range"] { width: 100%; accent-color: var(--primary); cursor: pointer; }
+        .bank-row { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 25px; display: grid; grid-template-columns: 150px 1fr 1fr 1fr 150px; align-items: center; gap: 20px; margin-bottom: 15px; }
+        .bank-logo { background: #fff; padding: 8px; border-radius: 12px; height: 50px; display: flex; align-items: center; justify-content: center; }
         .bank-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .btn-apply { background: var(--primary); color: #fff; text-decoration: none; padding: 12px; border-radius: 12px; text-align: center; font-weight: 800; }
     </style>
 </head>
 <body>
 <div class="container">
-    <a href="/" style="color:var(--primary); text-decoration:none; font-weight:700;"><i class="fa-solid fa-arrow-left"></i> Geri Dön</a>
+    <a href="/" style="color:var(--primary); text-decoration:none; font-weight:700;">← Geri Dön</a>
     <div class="filter-card">
-        <div><label>TUTAR: <b id="aTxt" style="color:var(--primary)">100.000 ₺</b></label><input type="range" id="amount" min="10000" max="1000000" step="10000" value="100000" oninput="calc()"></div>
-        <div><label>VADE: <b id="tTxt" style="color:var(--primary)">12 AY</b></label><input type="range" id="term" min="3" max="36" step="1" value="12" oninput="calc()"></div>
+        <div>
+            <label>TUTAR: <b id="aTxt" style="color:var(--primary)">100.000 ₺</b></label>
+            <input type="range" id="amount" min="10000" max="1000000" step="10000" value="100000" oninput="calc()">
+        </div>
+        <div>
+            <label>VADE: <b id="tTxt" style="color:var(--primary)">12 AY</b></label>
+            <input type="range" id="term" min="3" max="36" step="1" value="12" oninput="calc()">
+        </div>
     </div>
+
     <div id="results">
         <% banks.forEach(bank => { %>
         <div class="bank-row" data-rate="<%= bank.krediOran %>">
-            <div class="bank-logo"><img src="<%= bank.logo %>"></div>
+            <div class="bank-logo"><img src="<%= bank.logo %>" alt="<%= bank.ad %>"></div>
             <div><small style="color:var(--text-dim)">FAİZ</small><br><b style="color:#10b981;">%<%= bank.krediOran %></b></div>
             <div><small style="color:var(--text-dim)">TAKSİT</small><br><b class="inst">0 ₺</b></div>
             <div><small style="color:var(--text-dim)">TOPLAM</small><br><b class="total">0 ₺</b></div>
@@ -36,19 +42,31 @@
         <% }) %>
     </div>
 </div>
+
 <script>
     function calc() {
-        const A = document.getElementById('amount').value;
-        const T = document.getElementById('term').value;
-        document.getElementById('aTxt').innerText = parseInt(A).toLocaleString() + " ₺";
-        document.getElementById('tTxt').innerText = T + " AY";
+        // NaN hatasını önlemek için varsayılan değer atamaları
+        const amount = parseFloat(document.getElementById('amount').value) || 100000;
+        const term = parseInt(document.getElementById('term').value) || 12;
+        
+        document.getElementById('aTxt').innerText = amount.toLocaleString('tr-TR') + " ₺";
+        document.getElementById('tTxt').innerText = term + " AY";
+
         document.querySelectorAll('.bank-row').forEach(row => {
-            const R = parseFloat(row.dataset.rate) / 100;
-            const M = (A * R * Math.pow(1 + R, T)) / (Math.pow(1 + R, T) - 1);
-            row.querySelector('.inst').innerText = Math.floor(M).toLocaleString() + " ₺";
-            row.querySelector('.total').innerText = Math.floor(M * T).toLocaleString() + " ₺";
+            const rate = parseFloat(row.getAttribute('data-rate'));
+            
+            if (!isNaN(rate)) {
+                const monthlyRate = rate / 100;
+                // Bankacı formülü: (Anapara * Faiz * (1+Faiz)^Vade) / ((1+Faiz)^Vade - 1)
+                const installment = (amount * monthlyRate * Math.pow(1 + monthlyRate, term)) / (Math.pow(1 + monthlyRate, term) - 1);
+                const total = installment * term;
+
+                row.querySelector('.inst').innerText = Math.floor(installment).toLocaleString('tr-TR') + " ₺";
+                row.querySelector('.total').innerText = Math.floor(total).toLocaleString('tr-TR') + " ₺";
+            }
         });
     }
+    // Sayfa açıldığında ilk hesaplamayı yap
     window.onload = calc;
 </script>
 </body>
