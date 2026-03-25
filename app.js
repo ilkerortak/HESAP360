@@ -13,7 +13,6 @@ app.use(expressLayouts);
 app.set('layout', 'layout'); 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Türkçe Karakter Temizleme
 const trToEn = (str) => {
     if (!str) return "";
     return str.toLowerCase()
@@ -22,20 +21,15 @@ const trToEn = (str) => {
         .trim();
 };
 
-// YENİ MANTIK: Sadece şehri çeker, ilçeyi içinde süzer
 async function getEczaneler(city) {
     const cacheKey = `eczaneler_${trToEn(city)}`;
     const cachedData = myCache.get(cacheKey);
 
-    if (cachedData) {
-        console.log(`[Cache] ${city} verisi hafızadan getirildi.`);
-        return cachedData;
-    }
+    if (cachedData) return cachedData;
 
     try {
-        const safeCity = trToEn(city);
-        // API'ye dist (ilçe) göndermiyoruz, sadece şehir gönderiyoruz
-        let url = `https://api.collectapi.com/health/dutyPharmacy?city=${safeCity}`;
+        // DİKKAT: Burada sadece city gönderiyoruz, dist (ilçe) yok!
+        let url = `https://api.collectapi.com/health/dutyPharmacy?city=${trToEn(city)}`;
 
         const response = await axios.get(url, {
             headers: { 'authorization': API_KEY }
@@ -48,7 +42,7 @@ async function getEczaneler(city) {
         }
         return [];
     } catch (error) {
-        console.error("API Hatası:", error.message);
+        console.error("API Bağlantı Hatası:", error.message);
         return [];
     }
 }
@@ -58,10 +52,10 @@ app.get('/eczaneler/:il/:ilce?', async (req, res) => {
         const il = req.params.il || "sakarya";
         const ilce = req.params.ilce || "";
         
-        // 1. Tüm şehri çekiyoruz (400 hatası almamak için)
+        // Önce şehrin tamamını çekiyoruz
         let tumEczaneler = await getEczaneler(il);
         
-        // 2. Eğer kullanıcı ilçe seçmişse, gelen listenin içinden filtreliyoruz
+        // Eğer ilçe seçilmişse, süzgeci burada biz devreye sokuyoruz
         if (ilce) {
             tumEczaneler = tumEczaneler.filter(e => trToEn(e.dist) === trToEn(ilce));
         }
@@ -77,7 +71,6 @@ app.get('/eczaneler/:il/:ilce?', async (req, res) => {
         
         res.render('liste', { il: baslik, eczaneler: formatliEczaneler });
     } catch (err) {
-        console.error("Rota Hatası:", err.message);
         res.render('liste', { il: "HATA", eczaneler: [] });
     }
 });
@@ -90,5 +83,5 @@ app.get('/ads.txt', (req, res) => {
     res.send('google.com, pub-1894587939365426, DIRECT, f08c47fec0942fa0');
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080; // Loglarda 8080 gördüm, öyle kalsın
 app.listen(PORT, () => console.log(`Sistem ${PORT} portunda aktif!`));
