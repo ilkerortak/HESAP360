@@ -17,6 +17,8 @@ const financeData = {
 };
 
 app.get('/', (req, res) => res.render('index'));
+app.get('/kredi-karti', (req, res) => res.render('kredi-karti'));
+app.get('/kredi-limit', (req, res) => res.render('kredi-limit'));
 app.get('/kredi', (req, res) => res.render('kredi', { banks: financeData.banks }));
 app.get('/bilgi/:sayfa', (req, res) => {
     const sayfa = req.params.sayfa;
