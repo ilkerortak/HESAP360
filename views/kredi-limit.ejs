@@ -2,70 +2,41 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Kredi Limiti Tahmini | Hesap360</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>Limit Tahmini | Hesap360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #020617; --surface: #0f172a; --primary: #3b82f6; --border: rgba(255, 255, 255, 0.08); --text-dim: #94a3b8; }
-        body { background: var(--bg); font-family: 'Plus Jakarta Sans', sans-serif; color: #fff; margin: 0; }
-        .container { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
-        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 28px; padding: 40px; }
-        .input-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; color: var(--text-dim); font-size: 0.85rem; font-weight: 700; }
-        input { width: 100%; background: #020617; border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; box-sizing: border-box; }
-        .gauge-container { margin-top: 40px; text-align: center; display: none; }
-        .limit-box { background: linear-gradient(135deg, var(--primary) 0%, #1d4ed8 100%); padding: 30px; border-radius: 20px; margin-top: 20px; }
-        .limit-box h1 { margin: 10px 0; font-size: 2.5rem; }
+        :root { --main: #6366f1; --bg: #0f172a; --glass: #1e293b; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
+        .container { max-width: 600px; margin: 60px auto; padding: 20px; }
+        .calc-card { background: var(--glass); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
+        input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #334155; background: #0f172a; color: #fff; margin: 20px 0; font-size: 1.1rem; outline: none; }
+        .res-box { margin-top: 30px; padding: 20px; background: rgba(99, 102, 241, 0.1); border-radius: 20px; display: none; }
+        .btn-calc { background: var(--main); width: 100%; padding: 15px; border: none; border-radius: 12px; color: #fff; font-weight: 700; cursor: pointer; }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="/" style="color:var(--primary); text-decoration:none; font-weight:700; display:inline-block; margin-bottom:20px;">← Ana Sayfaya Dön</a>
-        <div class="card">
-            <h2>Kredi Limiti Tahmini</h2>
-            <p style="color:var(--text-dim); font-size:0.9rem;">Maaş ve mevcut borçlarınıza göre çekebileceğiniz maksimum tutarı öğrenin.</p>
+        <div class="calc-card">
+            <h2 style="margin-top:0;">Kredi Limitini Öğren</h2>
+            <p style="color:#94a3b8;">Aylık net gelirinizi girerek bankaların size sunabileceği tahmini limiti hesaplayın.</p>
+            <input type="number" id="income" placeholder="Aylık Net Gelir (₺)">
+            <button class="btn-calc" onclick="calculateLimit()">Hesapla</button>
             
-            <div class="input-group">
-                <label>AYLIK NET GELİR (₺)</label>
-                <input type="number" id="income" placeholder="Örn: 45000">
-            </div>
-            <div class="input-group">
-                <label>MEVCUT AYLIK KREDİ ÖDEMELERİ (₺)</label>
-                <input type="number" id="existing" value="0">
-            </div>
-
-            <button onclick="estimateLimit()" style="background:var(--primary); color:#fff; border:none; padding:18px; border-radius:12px; width:100%; font-weight:800; cursor:pointer;">LİMİTİ HESAPLA</button>
-
-            <div class="gauge-container" id="limitRes">
-                <div class="limit-box">
-                    <small style="color:rgba(255,255,255,0.8)">TAHMİNİ MAKSİMUM KREDİ LİMİTİNİZ</small>
-                    <h1 id="maxLimit">0 ₺</h1>
-                    <small id="monthlyCap" style="opacity:0.9"></small>
-                </div>
-                <p style="color:var(--text-dim); font-size:0.8rem; margin-top:20px;">* Bu hesaplama genel bankacılık rasyolarına (%50 borçlanma sınırı) göre yapılmıştır. Kredi notunuz sonucu değiştirebilir.</p>
+            <div id="result" class="res-box">
+                <small style="color:#94a3b8;">Tahmini Maksimum Limitiniz:</small>
+                <h2 id="limitVal" style="color:var(--main); margin:10px 0;">0 ₺</h2>
+                <p style="font-size:0.8rem; color:#64748b;">*Bu değer genel bankacılık rasyolarına göre hesaplanmıştır.</p>
             </div>
         </div>
     </div>
-
     <script>
-        function estimateLimit() {
-            const income = parseFloat(document.getElementById('income').value);
-            const existing = parseFloat(document.getElementById('existing').value) || 0;
-
-            if(!income) return alert("Lütfen gelirinizi girin.");
-
-            // Bankalar genelde gelirin %50'sine kadar taksit izni verir
-            const maxMonthlyPayment = (income * 0.5) - existing;
-            
-            if(maxMonthlyPayment <= 0) {
-                document.getElementById('maxLimit').innerText = "Limit Yok";
-                document.getElementById('monthlyCap').innerText = "Mevcut borçlarınız gelir sınırınızda.";
-            } else {
-                // Ortalama 36 ay vade ve 3.89 faiz ile çarpan (yaklaşık 18-20 katı)
-                const totalLimit = maxMonthlyPayment * 20; 
-                document.getElementById('maxLimit').innerText = Math.floor(totalLimit).toLocaleString() + " ₺";
-                document.getElementById('monthlyCap').innerText = "Maksimum Aylık Taksit Gücü: " + Math.floor(maxMonthlyPayment).toLocaleString() + " ₺";
+        function calculateLimit() {
+            const income = document.getElementById('income').value;
+            if(income > 0) {
+                const limit = income * 15; // Basit bankacı algoritması
+                document.getElementById('limitVal').innerText = limit.toLocaleString('tr-TR') + " ₺";
+                document.getElementById('result').style.display = 'block';
             }
-            document.getElementById('limitRes').style.display = 'block';
         }
     </script>
 </body>
