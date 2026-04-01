@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23E31837%22/><text y=%22.9em%22 x=%2250%%22 font-size=%2280%22 font-family=%22Arial, sans-serif%22 font-weight=%22bold%22 text-anchor=%22middle%22 fill=%22white%22>E</text></svg>">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eczane360 | Türkiye Nöbetçi Eczane Rehberi</title>
-    <meta name="description" content="Türkiye genelindeki en güncel nöbetçi eczaneleri hızlıca bulun.">
-    
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23E31837%22/><text y=%22.9em%22 x=%2250%%22 font-size=%2280%22 font-family=%22Arial, sans-serif%22 font-weight=%22bold%22 text-anchor=%22middle%22 fill=%22white%22>E</text></svg>">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    
     <style>
         :root {
             --primary: #007AFF;
@@ -33,12 +27,11 @@
         }
 
         nav {
-            padding: 15px 5%;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px); /* Safari desteği */
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
@@ -55,18 +48,7 @@
 
         .container {
             flex: 1;
-            padding: 20px 5%;
-        }
-
-        .apple-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            margin-top: 20px;
+            padding: 40px 5%;
         }
 
         footer {
@@ -74,6 +56,10 @@
             background: #000;
             border-top: 1px solid var(--border);
             text-align: center;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
         }
 
         .footer-links a {
@@ -86,28 +72,22 @@
 
         .footer-links a:hover { color: var(--primary); }
 
-        @media (max-width: 600px) {
-            .apple-card { padding: 20px; }
+        .apple-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
     </style>
 </head>
 <body>
-    <nav>
+   <nav>
         <a href="/" class="logo">ECZANE<span style="color:white">360</span></a>
     </nav>
 
     <div class="container">
-        <div style="margin-bottom: 20px;">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426" crossorigin="anonymous"></script>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1894587939365426"
-                 data-ad-slot="6221805368"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
-
         <%- body %>
     </div>
 
@@ -117,7 +97,7 @@
             <a href="/kvkk">KVKK</a>
             <a href="/iletisim">İletişim</a>
         </div>
-        <p style="color: #444; font-size: 0.8rem;">&copy; 2026 Eczane360. Tüm Hakları Saklıdır.</p>
+        <p style="color: #444; font-size: 0.8rem;">&copy; ® 2026 Eczane360. Tüm Hakları Saklıdır.</p>
     </footer>
 </body>
 </html>
